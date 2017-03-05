@@ -22,7 +22,7 @@ Installation
 
 You can download the latest tarball by clicking [here](https://github.com/sqlmapproject/sqlmap/tarball/master) or latest zipball by clicking  [here](https://github.com/sqlmapproject/sqlmap/zipball/master).
 
-Preferably, youn can download CyberScan by cloning the [Git]https://github.com/medbenali/CyberScan) repository:
+Preferably, youn can download CyberScan by cloning the [Git](https://github.com/medbenali/CyberScan) repository:
 
     git clone https://github.com/medbenali/CyberScan.git
 
