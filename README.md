@@ -11,5 +11,8 @@ Screenshots
 
 You can visit the [collection of screenshots](https://github.com/sqlmapproject/sqlmap/wiki/Screenshots) demonstrating some of features on the wiki.
 
-Installation
-----
+Operating Systems Supported
+---- 
+- Windows XP/7/8/8.1/10
+- GNU/Linux
+- MacOSX
