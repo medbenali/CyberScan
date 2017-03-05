@@ -16,3 +16,16 @@ Operating Systems Supported
 - Windows XP/7/8/8.1/10
 - GNU/Linux
 - MacOSX
+
+Installation
+----
+
+You can download the latest tarball by clicking [here](https://github.com/sqlmapproject/sqlmap/tarball/master) or latest zipball by clicking  [here](https://github.com/sqlmapproject/sqlmap/zipball/master).
+
+Preferably, youn can download CyberScan by cloning the [Git]https://github.com/medbenali/CyberScan) repository:
+
+    git clone https://github.com/medbenali/CyberScan.git
+
+CyberScan works out of the box with [Python](http://www.python.org/download/) version **2.6.x** and **2.7.x**.  
+
+
