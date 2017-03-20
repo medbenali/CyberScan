@@ -1,0 +1,7 @@
+ .o88b. db    db d8888b. d88888b d8888b.      .d8888.  .o88b.  .d8b.  d8b   db 
+d8P  Y8 `8b  d8' 88  `8D 88'     88  `8D      88'  YP d8P  Y8 d8' `8b 888o  88       v{MAYOR_VERSION}.{MINOR_VERSION}.{REVISION} 			        
+8P       `8bd8'  88oooY' 88ooooo 88oobY'      `8bo.   8P      88ooo88 88V8o 88       
+8b         88    88~~~b. 88~~~~~ 88`8b          `Y8b. 8b      88~~~88 88 V8o88 
+Y8b  d8    88    88   8D 88.     88 `88.      db   8D Y8b  d8 88   88 88  V888 
+ `Y88P'    YP    Y8888P' Y88888P 88   YD      `8888Y'  `Y88P' YP   YP VP   V8P 
+                                                                        

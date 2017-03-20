@@ -10,10 +10,10 @@ $ pip install scapy
 $ git clone https://github.com/medbenali/CyberScan.git
 ```
 
-You can test the installation firing up CyberScan iteratively. These are some useful functions:
-```sh
-$ python CyberScan.py -h 
-```
+You can test the installation firing up CyberScan iteratively. These are some useful 
+
+![Screenshot](https://github.com/medbenali/CyberScan/blob/master/images/demo.png)
+
 ---
 
 ## Pinging The Network

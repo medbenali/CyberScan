@@ -356,7 +356,7 @@ def pcap_analyser_icmp(file):
 
 def main():
 	header()
-	usage()
+	
         
 
 	global serveur
@@ -380,8 +380,7 @@ def main():
 	
 	opts, args = optp.parse_args()
 	if opts.help:
-	    print "help"
-	    #usage()
+	    usage()
 	if opts.file and opts.level == "eth":
 		file=opts.file
 		pcap_analyser_eth(file)
@@ -408,20 +407,18 @@ def main():
 	    port = opts.sport
 	    tcp_ping(serveur,port)
 	
-	elif opts.level == "Scan" and opts.sport is not None and opts.eport is not None:
+	elif opts.level == "scan" and opts.sport is not None and opts.eport is not None:
 	    level = opts.serveur
 	    start_port = int(opts.sport)
 	    end_port = int(opts.eport)
 	    flag = 0
-	    print "flage0"
 	    superscan(serveur,start_port,end_port)
 
-	elif opts.level == "Scan" and opts.sport is None and opts.eport is None:
+	elif opts.level == "scan" and opts.sport is None and opts.eport is None:
 	    level = opts.serveur
-	    start_port = int(opts.sport)
-	    end_port = int(opts.eport)
+	    start_port = int(0)
+	    end_port = int(0)
 	    flag=1
-	    print "flag1"
 	    superscan(serveur,start_port,end_port)
 	
 	elif opts.serveur is not None and opts.level == "udp":
