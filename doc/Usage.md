@@ -59,6 +59,21 @@ Or even  UDP  (which produces ICMP port unreachable errors from live hosts). We 
 $ CyberScan -s 192.168.*.1-10 -p udp
 ```
 
+---
+
+## Network Scanning and Sniffing
+
+### Port Scanner
+
+This is result of port scanner with Nmap:
+
+![](http://i.imgur.com/lv89lc3.png)
+
+```sh
+$ CyberScan -s 192.168.*.1-10 -p udp
+```
+
+
 
 
 
