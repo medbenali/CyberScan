@@ -7,7 +7,7 @@ CyberScan is an open source penetration testing tool that automates the process 
 Screenshots
 ----
 
-![Screenshot](https://raw.githubusercontent.com/medbenali/CyberScan/master/images/demo.png?token=AX-O1GAn9NxjRdLmVyh3VTuZzWwn4Kczks5YxVzwwA%3D%3D)
+![Screenshot](https://github.com/medbenali/CyberScan/blob/master/images/demo.png)
 
 You can visit the [collection of screenshots](https://github.com/sqlmapproject/sqlmap/wiki/Screenshots) demonstrating some of features on the wiki.
 
