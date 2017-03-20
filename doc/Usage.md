@@ -15,7 +15,7 @@ You can test the installation firing up CyberScan iteratively. These are some us
 $ python CyberScan.py -h 
 ```
 ------
-## <a name="ping'></a> Pinging The Network
+## <a name="ping"></a> Pinging The Network
 
 We can perform **ping** operations with several protocols using CyberScan The fastest way to discover hosts on a local Ethernet network is to use ARP:
 
