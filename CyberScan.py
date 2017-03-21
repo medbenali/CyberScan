@@ -41,6 +41,10 @@ __description__ = '''\
   ___________________________________________
 '''
 
+__levels__ = '''\
+  arp : ping arp
+'''
+	
 
 def header():
     MAYOR_VERSION = 1
@@ -58,20 +62,17 @@ def header():
 
 
 def usage():
-	print (''' \033[92m CyberScan v.1 http://github/medbenali/CyberScan
+
+	print (''' \033[92m CyberScan v.1.01 http://github/medbenali/CyberScan
 	It is the end user's responsibility to obey all applicable laws.
 	It is just for server testing script. Your ip is visible. \n
-	usage : python CyberScan.py [-s] [-p] [-d]
-        -h : help
-	-s : server ip
-	-p : port default 80
-	-d : turbo default 135 
+	  ___________________________________________
+	 
+ 	  CyberScan | v.1.01   
+	  Author: BEN ALI Mohamed
+ 	  ___________________________________________
 	
-	Test Network Connection With Ping :
-	arp : ARP Ping   Ex : CyberScan -s 192.168.1.0/24 -p arp
-	icmp : ICMP Ping Ex : CyberScan -s 192.168.1.1-254 -p icmp 
-	tcp : TCP Ping Ex :  
-	
+
 	\n \033[0m''')
 	
 
@@ -90,12 +91,12 @@ def write(string):
 
 
 def arp_ping(host):
-    print '[*] Starting Ping ARP for %s' %(host)
+    print '[*] Starting CyberScan Ping ARP for %s' %(host)
     ans, unans = srp(Ether(dst="ff:ff:ff:ff:ff:ff")/ARP(pdst=host), timeout=2)
     ans.summary(lambda (s,r): r.sprintf("%Ether.src% %ARP.psrc%"))
 
 def icmp_ping(host):
-    print '[*] Starting Ping ICMP for %s' %(host)
+    print '[*] Starting CyberScan Ping ICMP for %s' %(host)
     ans, unans =srp(IP(dst=host)/ICMP())
     ans.summary(lambda (s,r): r.sprint("%IP.src% is alive"))
 
@@ -104,12 +105,12 @@ def tcp_ping(host,dport):
     ans.summary(lambda (s,r): r.sprintf("%IP.src% is alive"))
 
 def udp_ping(host,port=0):
-    print '[*] Starting Ping UDP for %s' %(host)
+    print '[*] Starting CyberScan Ping UDP for %s' %(host)
     ans, unans = sr(IP(dst=host)/UDP(dport=port))
     ans.summary(lambda(s, r): r.sprintf("%IP.src% is alive"))
 
 def superscan(host,start_port,end_port):
-	print "super scan"
+	print '[*] CyberScan Port Scanner'
 	open_ports = []
 	common_ports = {
 		'21': 'FTP',
@@ -146,10 +147,10 @@ def superscan(host,start_port,end_port):
 
 	starting_time=time.time()
 	if(flag):
-		print "Scanning For Most Common Ports On %s" % (host)
+		print "[*] Scanning For Most Common Ports On %s" % (host)
 	else:
-		print "Scanning %s From Port %s To %s: " % (host,start_port,end_port)
-	print "Starting CyberScan 1.01 at %s" %(time.strftime("%Y-%m-%d %H:%M %Z"))
+		print "[*] Scanning %s From Port %s To %s: " % (host,start_port,end_port)
+	print "[*] Starting CyberScan 1.01 at %s" %(time.strftime("%Y-%m-%d %H:%M %Z"))
 	def check_port(host,port,result= 1):
 		try:
 			sock = socket.socket(socket.AF_INET,socket.SOCK_STREAM)
@@ -169,8 +170,8 @@ def superscan(host,start_port,end_port):
 		else:
 			return 0
 	try:
-		print "Scan In Progress ..."
-		print "Connecting To Port : ",
+		print "[*] Scan In Progress ..."
+		print "[*] Connecting To Port : ",
 		
 		if flag:
 			for p in sorted(common_ports):
@@ -196,20 +197,20 @@ def superscan(host,start_port,end_port):
 				if not p == end_port:
 					sys.stdout.write('\b' * len(str(p)))
 
-		print "\nScanning Completed at %s" %(time.strftime("%Y-%m-%d %H:%M %Z"))
+		print "\n[*] Scanning Completed at %s" %(time.strftime("%Y-%m-%d %H:%M %Z"))
 		ending_time = time.time()
 		total_time = ending_time - starting_time
 		
 		if total_time <=60:
-			print "CyberScan done: 1IP address (1host up) scanned in %s seconds" %(total_time)
+			print "[*] CyberScan done: 1IP address (1host up) scanned in %s seconds" %(total_time)
 
 		else:
 			total_time = total_time / 60
-			print "CyberScan done: 1IP address (1host up) scanned in %s Minutes" %(total_time)
+			print "[*] CyberScan done: 1IP address (1host up) scanned in %s Minutes" %(total_time)
 
 
 		if open_ports:
-			print "Open Ports: "
+			print "[*] Open Ports: "
 			for i in sorted(open_ports):
 				service = get_service(i)
 				if not service:
@@ -217,11 +218,11 @@ def superscan(host,start_port,end_port):
 				print "\t%s %s: Open" % (i,service)
 
 		else:
-			print "Sorry, No Open Ports Found.!!"
+			print "[*] Sorry, No Open Ports Found.!!"
 	
 			
 	except KeyboardInterrupt:
-		print "You Pressed Ctrl+C. Exiting"
+		print "\n[*] You Pressed Ctrl+C. Exiting"
 		sys.exit(1)		
 
 
@@ -356,6 +357,7 @@ def pcap_analyser_icmp(file):
 
 def main():
 	header()
+	usage()
 	
         
 
@@ -367,62 +369,67 @@ def main():
 	global flag
 	flag=0
 	
-
-	optp = OptionParser(add_help_option=False,epilog="CyberScan")
-	optp.add_option("-q","--quiet", help="set logging to ERROR",action="store_const", dest="loglevel",const=logging.ERROR,default=logging.INFO)
-	optp.add_option("-s","--serveur", dest="serveur",help="attack to serveur ip -s")
-	optp.add_option("-p","--level",dest="level",help="stack to level")
-	optp.add_option("-d","--sport",dest="sport",help="-start port")
-	optp.add_option("-t","--eport",dest="eport",help="-end_port")
-	optp.add_option("-f", "--file", dest="file",
-                      help="read pcap file")
-	optp.add_option("-h","--help",dest="help",action="store_true",help="help you")
 	
-	opts, args = optp.parse_args()
-	if opts.help:
-	    usage()
-	if opts.file and opts.level == "eth":
-		file=opts.file
+	parser = argparse.ArgumentParser(description='CyberScan',formatter_class=argparse.RawTextHelpFormatter,epilog='''\
+levels with ip adress:
+  scan : scan ports
+  arp : ping arp
+  icmp : ping arp
+  tcp : ping tcp
+  udp : ping udp
+
+levels with pcap file:
+  eth : extract ethernet headers
+  ip : extract 	ip headers
+  tcp : extract tcp headers
+  udp : extract udp headers
+
+                    ''')
+
+	parser.add_argument("-s","--serveur", dest="serveur",help="attack to serveur ip -s")
+	parser.add_argument("-p","--level",dest="level",help="stack to level")
+	parser.add_argument("-d","--sport",dest="sport",help="-start port")
+	parser.add_argument("-t","--eport",dest="eport",help="-end_port")
+	parser.add_argument("-f", "--file", dest="file",
+                      help="read pcap file")
+
+	args = parser.parse_args()
+	serveur = args.serveur
+	file = args.file
+	level = args.level
+	sport = args.sport 
+	eport = args.eport
+	if file and level == "eth":
 		pcap_analyser_eth(file)
-	elif opts.file and opts.level == "ip":
-		file=opts.file
+	elif file and level == "ip":
 		pcap_analyser_ip(file)
-	elif opts.file and opts.level == "tcp":
-		file=opts.file
+	elif file and level == "tcp":
 		pcap_analyser_tcp(file)
-	elif opts.file and opts.level == "udp":
+	elif file and level == "udp":
 		file=opts.file
-		pcap_analyser_udp(file)	
-	if opts.serveur is not None:
-	    serveur = opts.serveur
-	if opts.level == "arp":
-            level = opts.level
+		pcap_analyser_udp(file)	    
+	elif serveur is not None and level == "arp":
 	    arp_ping(serveur)	
-	elif opts.level == "icmp":
-	    level = opts.serveur
+	elif serveur is not None and level == "icmp":
 	    icmp_ping(serveur)
 
-	elif opts.level == "tcp" and opts.sport is not None:
-	    level = opts.serveur
-	    port = opts.sport
+	elif serveur is not None and level == "tcp" and sport is not None:
+	    port = sport
 	    tcp_ping(serveur,port)
 	
-	elif opts.level == "scan" and opts.sport is not None and opts.eport is not None:
-	    level = opts.serveur
-	    start_port = int(opts.sport)
-	    end_port = int(opts.eport)
+	elif serveur is not None and level == "scan" and sport is not None and eport is not None:
+	    start_port = int(sport)
+	    end_port = int(eport)
 	    flag = 0
 	    superscan(serveur,start_port,end_port)
 
-	elif opts.level == "scan" and opts.sport is None and opts.eport is None:
-	    level = opts.serveur
+	elif serveur is not None and level == "scan" and sport is None and eport is None:
 	    start_port = int(0)
 	    end_port = int(0)
 	    flag=1
 	    superscan(serveur,start_port,end_port)
 	
-	elif opts.serveur is not None and opts.level == "udp":
-	    level = opts.serveur
+	elif serveur is not None and level == "udp":
 	    #port = 0
 	    udp_ping(serveur,port=0)
 	    
@@ -431,9 +438,10 @@ def main():
 
 
 
-	elif opts.level == "level2":
-	    level = opts.level
+	elif args.level == "level2":
+	    level = args.level
 	    print "level 2" + level
+
 
 	
 	
@@ -444,7 +452,9 @@ def main():
 
 
 if __name__ == '__main__':
+    #os.system('clear')
     main()
+   
     
     	
 
