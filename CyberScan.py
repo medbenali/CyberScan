@@ -356,8 +356,8 @@ def pcap_analyser_icmp(file):
 
 
 def main():
-	header()
-	usage()
+	#header()
+	#usage()
 	
         
 
@@ -399,6 +399,8 @@ levels with pcap file:
 	level = args.level
 	sport = args.sport 
 	eport = args.eport
+	header()
+	usage()
 	if file and level == "eth":
 		pcap_analyser_eth(file)
 	elif file and level == "ip":
@@ -432,6 +434,9 @@ levels with pcap file:
 	elif serveur is not None and level == "udp":
 	    #port = 0
 	    udp_ping(serveur,port=0)
+
+	
+             
 	    
 		
 	    
