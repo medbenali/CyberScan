@@ -66,8 +66,7 @@ $ CyberScan -s 192.168.*.1-10 -p udp
 
 ### Port Scanner
 
-This is result of port scanner with [Nmap] (https://nmap.org)
-
+This is result of port scanner with [Nmap](https://nmap.org)
 
 ```sh
 $ CyberScan -s 192.168.*.1-10 -p udp
