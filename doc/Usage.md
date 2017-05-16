@@ -72,16 +72,36 @@ This is result of port scanner with [Nmap](https://nmap.org):
 
 In CyberSan Tool we can scan with or without specify start and end port 
 
-![](https://github.com/medbenali/CyberScan/blob/master/images/CyberScanPortScanWi.png)
+```sh
+$ CyberScan -s 192.168.1.1 -p scan -d 1 -t 100
+[*] CyberScan Port Scanner
+[*] Scanning 192.168.1.1 From Port 1 To 100: 
+[*] Starting CyberScan 1.01 at 2017-05-16 03:13 CEST
+[*] Scan In Progress ...
+[*] Connecting To Port :  100 
+[*] Scanning Completed at 2017-05-16 03:13 CEST
+[*] CyberScan done: 1IP address (1host up) scanned in 0.11 seconds
+[*] Open Ports: 
+	23 TELNET: Open
+	53 DNS: Open
+	80 HTTP: Open
+```
 
 and CyberScan is  more rapid then Nmap when we compare the duration of network scan port
 
-![](https://github.com/medbenali/CyberScan/blob/master/images/CyberScanPortScanWo.png)
-
-
 ```sh
-$ CyberScan -s 192.168.*.1-10 -p udp
+$ CyberScan -s 8.8.8.8 -p scan
+[*] CyberScan Port Scanner
+[*] Scanning For Most Common Ports On 8.8.8.8
+[*] Starting CyberScan 1.01 at 2017-05-16 03:03 CEST
+[*] Scan In Progress ...
+[*] Connecting To Port :  10000 109 110 123 137 138 139 143 156 2082 2083 2086 2087 21 22 23 25 3306 389 443 546 547 69 80 8443 993 995 
+[*] Scanning Completed at 2017-05-16 03:03 CEST
+[*] CyberScan done: 1IP address (1host up) scanned in 13.58 seconds
+[*] Open Ports: 
+	53 DNS: Open
 ```
+
 
 
 
