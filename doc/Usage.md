@@ -72,16 +72,20 @@ This is result of port scanner with [Nmap](https://nmap.org):
 
 In CyberSan Tool we can scan with or without specify start and end port 
 
-![](https://github.com/medbenali/CyberScan/blob/master/images/NmapPortScan.png)
+![](https://github.com/medbenali/CyberScan/blob/master/images/CyberScanPortScanWi.png)
 
 and CyberScan is  more rapid then Nmap when we compare the duration of network scan port
 
-![](https://github.com/medbenali/CyberScan/blob/master/images/NmapPortScan.png)
+![](https://github.com/medbenali/CyberScan/blob/master/images/CyberScanPortScanWo.png)
 
 
 ```sh
 $ CyberScan -s 192.168.*.1-10 -p udp
 ```
+
+
+
+
 
 
 
