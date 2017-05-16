@@ -200,13 +200,12 @@ def superscan(host,start_port,end_port):
 		print "\n[*] Scanning Completed at %s" %(time.strftime("%Y-%m-%d %H:%M %Z"))
 		ending_time = time.time()
 		total_time = ending_time - starting_time
-		
 		if total_time <=60:
-			print "[*] CyberScan done: 1IP address (1host up) scanned in %s seconds" %(total_time)
+			print "[*] CyberScan done: 1IP address (1host up) scanned in %.2f seconds" %(total_time)
 
 		else:
 			total_time = total_time / 60
-			print "[*] CyberScan done: 1IP address (1host up) scanned in %s Minutes" %(total_time)
+			print "[*] CyberScan done: 1IP address (1host up) scanned in %.2f Minutes" %(total_time)
 
 
 		if open_ports:
