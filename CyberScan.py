@@ -279,6 +279,13 @@ def pcap_analyser_ip(file):
 def pcap_analyser_tcp(file):
 	pkts = rdpcap(file)
 	i=0
+	SYN = 0x02
+	FIN = 0X01
+	RST = 0x04
+	PSH = 0X08
+	ACK = 0X10
+	URG = 0x20
+
 	for pkt in pkts:
 			
 		if pkt.haslayer(TCP):
@@ -309,6 +316,33 @@ def pcap_analyser_tcp(file):
 			print "[*] TCP Urgptr : " ,urgptrTCP
 			optionsTCP = TCPpkt.options
 			print "[*] TCP Options : " ,optionsTCP	
+			nbrsun=0
+			nbrrst=0
+			nbrack=0
+			nbrfin=0
+			nbrurg=0
+			nbrpsh=0
+			FlagsTCP=pkt[TCP].flags
+          	        if FlagsTCP==SYN:
+                		nbrsun=1
+				print "[*] TCP SYN FLAGS : " ,nbrsyn
+    	      	        elif FlagsTCP==RST:
+				nbrrst=1
+				print "[*] TCP RST FLAGS : " ,nbrrst	     	
+                        elif FlagsTCP==ACK:
+                		nbrack=1
+				print "[*] TCP ACK FLAGS : " ,nbrack
+		       elif FlagsTCP==FIN:
+				nbrfin=1
+				print "[*] TCP FIN FLAGS : " ,nbrfin
+		       elif FlagsTCP==URG:
+				nbrurg=1
+				print "[*] TCP URG FLAGS : " ,nbrurg
+		       elif FlagsTCP==PSH:
+				nbrpsh=1
+				print "[*] TCP PSH FLAGS : " ,nbrpsh
+	
+
 
 def pcap_analyser_udp(file):
 	pkts = rdpcap(file)
@@ -407,7 +441,6 @@ levels with pcap file:
 	elif file and level == "tcp":
 		pcap_analyser_tcp(file)
 	elif file and level == "udp":
-		file=opts.file
 		pcap_analyser_udp(file)	    
 	elif serveur is not None and level == "arp":
 	    arp_ping(serveur)	

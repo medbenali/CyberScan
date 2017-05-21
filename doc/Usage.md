@@ -78,6 +78,21 @@ and CyberScan is  more rapid then Nmap when we compare the duration of network s
 
 ![](https://github.com/medbenali/CyberScan/blob/master/images/CyberScanPortScan2.png)
 
+------
+## Analyzing PCAP Files
+
+CyberScan can analyse pcap files in order to extract ethernet , ip , tcp , icmp , udp headrers .
+
+### Ethernet Headers
+
+ 
+### The PCAP Files Manipulation
+
+
+
+We have learned how to steal credentials from some email protocols, now let us extend this to all the traffic in the network!
+
+
 
 
 
