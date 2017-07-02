@@ -332,13 +332,13 @@ def pcap_analyser_tcp(file):
                         elif FlagsTCP==ACK:
                 		nbrack=1
 				print "[*] TCP ACK FLAGS : " ,nbrack
-		       elif FlagsTCP==FIN:
+		        elif FlagsTCP==FIN:
 				nbrfin=1
 				print "[*] TCP FIN FLAGS : " ,nbrfin
-		       elif FlagsTCP==URG:
+		        elif FlagsTCP==URG:
 				nbrurg=1
 				print "[*] TCP URG FLAGS : " ,nbrurg
-		       elif FlagsTCP==PSH:
+		        elif FlagsTCP==PSH:
 				nbrpsh=1
 				print "[*] TCP PSH FLAGS : " ,nbrpsh
 	
