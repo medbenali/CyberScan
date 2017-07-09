@@ -1,0 +1,14 @@
+-- routae table
+
+-- geo ip
+
+-- stealing email
+
+-- arp cache poisoning
+
+--syn flooad
+
+
+*******************************
+
+

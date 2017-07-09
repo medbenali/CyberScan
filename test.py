@@ -3,19 +3,41 @@ import sys
 import platform
 import argparse
 import time
+import threading
 import socket
 
-parser = argparse.ArgumentParser(description='CyberScan')
+from scapy.all import *
+from optparse import OptionParser
+from libs.colorama import *
+from libs import FileUtils
+file ="1.pcap"
+def pcap_analyser_tcp(file):
+	pkts = rdpcap(file)
+	i=0
+	SYN = 0x02
+	FIN = 0X01
+	RST = 0x04
+	PSH = 0X08
+	ACK = 0X10
+	URG = 0x20
 
-parser.add_argument("-s","--serveur", dest="serveur",help="attack to serveur ip -s",nargs=1)
-parser.add_argument("-p","--level",dest="level",help="stack to level")
-parser.add_argument("-d","--sport",dest="sport",help="-start port")
-parser.add_argument("-t","--eport",dest="eport",help="-end_port")
-parser.add_argument("-f", "--file", dest="file",
-                      help="read pcap file",nargs=1)
+	for pkt in pkts:
+			
+		if pkt.haslayer(TCP):
+			i += 1
+			print "-" * 40
+			print "[*] Packet : " + str(i)
+			print "[+] ###[ TCP ] ###"
+			TCPpkt = pkt[TCP]
+			#print pkt.summary()
+			print hexdump(pkt)
+			#print str(packet).encode("HEX")
+			#print str(packet)
+		
 
-args = parser.parse_args()
-if args.serveur is not None and args.level == "arp" :
-	print "arp"
-else:
-	print "other"
+if __name__ == '__main__':
+    #os.system('clear')
+    file ="1.pcap"
+    pcap_analyser_tcp(file)
+ 
+   
