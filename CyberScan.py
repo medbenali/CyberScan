@@ -21,13 +21,13 @@ import sys
 import platform
 import argparse
 import time
-import threading
 import socket
+import pygeoip
 
 from scapy.all import *
-from optparse import OptionParser
 from libs.colorama import *
 from libs import FileUtils
+
 
 
 if platform.system() == 'Windows':
@@ -42,11 +42,6 @@ __description__ = '''\
   ___________________________________________
 '''
 
-__levels__ = '''\
-  arp : ping arp
-'''
-	
-
 def header():
     MAYOR_VERSION = 1
     MINOR_VERSION = 1
@@ -58,12 +53,10 @@ def header():
     }
 
     PROGRAM_BANNER = open(FileUtils.buildPath("banner.txt")).read().format(**VERSION)
-    message = Style.BRIGHT + Fore.MAGENTA + PROGRAM_BANNER + Style.RESET_ALL
+    message = Style.BRIGHT + Fore.RED + PROGRAM_BANNER + Style.RESET_ALL
     write(message)
 
-
 def usage():
-
 	print (''' \033[92m CyberScan v.1.01 http://github/medbenali/CyberScan
 	It is the end user's responsibility to obey all applicable laws.
 	It is just for server testing script. Your ip is visible. \n
@@ -76,8 +69,6 @@ def usage():
 
 	\n \033[0m''')
 	
-
-
 def write(string):
     if platform.system() == 'Windows':
 	sys.stdout.write(string)
@@ -89,63 +80,46 @@ def write(string):
     sys.stdout.flush()
     sys.stdout.flush()
 
-def fuzz_dns(host):
-    print "start fuzz dns" 
-    send(IP(dst=host)/UDP()/fuzz(DNS()), inter=1,loop=1)
-    print "end fuzz dns"	
-	
-def fuzz_tcp(host):
-    print "fuzz start"
-    send(IP(dst=host)/fuzz(UDP()/NTP(version=4)),loop=1)
-    print "end fuzz tcp"
+def geo_ip(host):
 
-# ddos start
-def syn_flood(host,port):
-    print "start syn flood"
-    ip = fuzz(IP(dst=host))
-    syn = fuzz(TCP(dport=port,flags='S'))
-    send(ip/syn,verbose=0)
-    print " end syn flood"	
+    try:
 
-def tcp_flood(host,port):
-    print "start tcp flood"
-    ip = fuzz(IP(dst=host))
-    tcp = fuzz(TCP(dport=port))
-    send(ip/tcp,verbose=0)
-    print "end tcp flood"
+       rawdata = pygeoip.GeoIP('GeoLiteCity.dat')
+       data = rawdata.record_by_name(host)	
+       country = data['country_name']
+       city = data['city']
+       longi = data['longitude']
+       lat = data['latitude']
+       time_zone = data['time_zone']
+       area_code = data['area_code']
+       country_code = data['country_code']
+       region_code = data['region_code']
+       dma_code = data['dma_code']
+       metro_code = data['metro_code']
+       country_code3 = data['country_code3']
+       zip_code = data['postal_code']
+       continent = data['continent']
 
+       print '[*] IP Adress: ',host
+       print '[*] City: ',city
+       print '[*] Region Code: ',region_code
+       print '[*] Area Code: ',area_code
+       print '[*] Time Zone: ',time_zone
+       print '[*] Dma Code: ',dma_code
+       print '[*] Metro Code: ',metro_code
+       print '[*] Latitude: ',lat
+       print '[*] Longitude: ',longi
+       print '[*] Zip Code: ',zip_code
+       print '[*] Country Name: ',country
+       print '[*] Country Code: ',country_code
+       print '[*] Country Code3: ',country_code3
+       print '[*] Countinent: ',continent
 
-def udp_flood(host,port):
-    print "start udp flood"
-    ip = fuzz(IP(dst=host))
-    udp = fuzz(UDP(dport=port))
-    send(ip/udp, verbose=0)
-    print "end udp flood"
+    except :
+           print "[*] Please verify your ip !"
+	   	
 
-def icmp_flood(host):
-    print "start icmp flood"
-    ip = fuzz(IP(dst=host))
-    icmp = fuzz(ICMP())
-    send(ip/icmp,verbose=0)
-    print "end icmp flood"
- 
-#ddos end
-
-
-
-
-def route_table():
-    print conf.route
-
-def add_route_table(host,gw):
-    conf.route.add(host, gw)
-    conf.route.resync()
-    print conf.route	
-
-def resync_route__table():
-    conf.route.resync()
-    
-	
+    	
 def arp_ping(host):
     print '[*] Starting CyberScan Ping ARP for %s' %(host)
     ans, unans = srp(Ether(dst="ff:ff:ff:ff:ff:ff")/ARP(pdst=host), timeout=2)
@@ -292,8 +266,7 @@ def pcap_analyser_eth(file):
 		print "[*] Mac Destination : " + pkt.dst
 		print "[*] Mac Source : " + pkt.src
 		print "[*] Ethernet Type : " + str(pkt.type)
-
-
+          
 def pcap_analyser_ip(file):
 	pkts = rdpcap(file)
 	i=0
@@ -331,6 +304,8 @@ def pcap_analyser_ip(file):
 			print "[*] IP Chksum : " ,chksumIP
 			optionsIP = IPpkt.options
 			print "[*] IP Options : " ,optionsIP
+			print "[*] IP Dump : " 
+			print hexdump(IPpkt)
 
 def pcap_analyser_tcp(file):
 	pkts = rdpcap(file)
@@ -372,7 +347,7 @@ def pcap_analyser_tcp(file):
 			print "[*] TCP Urgptr : " ,urgptrTCP
 			optionsTCP = TCPpkt.options
 			print "[*] TCP Options : " ,optionsTCP	
-			nbrsun=0
+			nbrsyn=0
 			nbrrst=0
 			nbrack=0
 			nbrfin=0
@@ -397,7 +372,8 @@ def pcap_analyser_tcp(file):
 		        elif FlagsTCP==PSH:
 				nbrpsh=1
 				print "[*] TCP PSH FLAGS : " ,nbrpsh
-	
+                        print "[*] TCP Dump : " 
+			print hexdump(TCPpkt)
 
 
 def pcap_analyser_udp(file):
@@ -419,6 +395,8 @@ def pcap_analyser_udp(file):
 			print "[*] UDP Len : " ,lenUDP
 			chksumUDP = UDPpkt.chksum
 			print "[*] UDP Chksum : " ,chksumUDP
+                        print "[*] UDP Dump : " 
+			print hexdump(UDPpkt)
 
 
 def pcap_analyser_icmp(file):
@@ -441,14 +419,12 @@ def pcap_analyser_icmp(file):
 			idICMP = ICMPpkt.id
 			print "[*] ICMP Id : " ,idICMP
 			seqICMP = ICMPpkt.seq
-			print "[*] ICMP Seq : " ,seqICMP		
+			print "[*] ICMP Seq : " ,seqICMP	
+                        print "[*] ICMP Dump : " 
+			print hexdump(ICMPpkt)	
 
 
 def main():
-	#header()
-	#usage()
-	
-        
 
 	global serveur
 	global level
@@ -460,124 +436,100 @@ def main():
 	global options
 	flag=0
 	
-	
-	parser = argparse.ArgumentParser(description='CyberScan',formatter_class=argparse.RawTextHelpFormatter,epilog='''\
+	try:
+
+	    parser = argparse.ArgumentParser(description=__description__,formatter_class=argparse.RawTextHelpFormatter,epilog='''\
 levels with ip adress:
   scan : scan ports
   arp : ping arp
   icmp : ping arp
   tcp : ping tcp
   udp : ping udp
+  geoip : geolocalisation
 
 levels with pcap file:
   eth : extract ethernet headers
   ip : extract 	ip headers
   tcp : extract tcp headers
   udp : extract udp headers
-
-None : 
-route : view routing table
+  icmp : extract icmp headers
 
                     ''')
 
-	parser.add_argument("-s","--serveur", dest="serveur",help="attack to serveur ip -s")
-	parser.add_argument("-p","--level",dest="level",help="stack to level")
-	parser.add_argument("-d","--sport",dest="sport",help="-start port")
-	parser.add_argument("-t","--eport",dest="eport",help="-end_port")
-	parser.add_argument("-f", "--file", dest="file",
+	    parser.add_argument("-s","--serveur", dest="serveur",help="attack to serveur ip")
+	    parser.add_argument("-p","--level",dest="level",help="stack to level")
+	    parser.add_argument("-d","--sport",dest="sport",help="start port to scan")
+	    parser.add_argument("-t","--eport",dest="eport",help="end port to scan")
+	    parser.add_argument("-f", "--file", dest="file",
                       help="read pcap file")
-	parser.add_argument("-gw",dest="gateway",help="add gateway")
-	parser.add_argument("--options",dest="options",help="view routing table")
-
-	args = parser.parse_args()
-	serveur = args.serveur
-	file = args.file
-	level = args.level
-	sport = args.sport 
-	eport = args.eport
-	gw = args.gateway	
-	options= args.options
-	
-	header()
-	usage()
-	if file and level == "eth":
-		pcap_analyser_eth(file)
-	elif file and level == "ip":
-		pcap_analyser_ip(file)
-	elif file and level == "tcp":
-		pcap_analyser_tcp(file)
-	elif file and level == "udp":
-		pcap_analyser_udp(file)	    
-	elif serveur is not None and level == "arp":
-	    arp_ping(serveur)	
-	elif serveur is not None and level == "icmp":
-	    icmp_ping(serveur)
-
-	elif serveur is not None and level == "tcp" and sport is not None:
-	    port = sport
-	    tcp_ping(serveur,port)
-	
-	elif serveur is not None and level == "scan" and sport is not None and eport is not None:
-	    start_port = int(sport)
-	    end_port = int(eport)
-	    flag = 0
-	    superscan(serveur,start_port,end_port)
-
-	elif serveur is not None and level == "scan" and sport is None and eport is None:
-	    start_port = int(0)
-	    end_port = int(0)
-	    flag=1
-	    superscan(serveur,start_port,end_port)
-	
-	elif serveur is not None and level == "udp":
-	    #port = 0
-	    udp_ping(serveur,port=0)
-
-	# fuzz start
-
-	elif serveur is not None and level== "fuzz_dns":
-	    fuzz_dns(serveur)
-	elif serveur is not None and level== "fuzz_tcp":
-	    fuzz_tcp(serveur)
-	
-	#fuzz end
-
-	# start syn flood "
-	
 	
 
-	# end syn flood
-
-	elif serveur is not None and level == "addroute" and gw is not None:
-	    add_route_table(serveur,gw)
-
-	elif options == "route":
-	    route_table()
-
-	
-             
-	    
-		
-	    
-
-
-
-	elif args.level == "level2":
+	    args = parser.parse_args()
+	    serveur = args.serveur
+	    file = args.file
 	    level = args.level
-	    print "level 2" + level
+	    sport = args.sport 
+	    eport = args.eport	
+	
+	
+            if file is not None or serveur is not None:
+
+            		header()
+	    	        usage()
+                 
+			if file and level == "eth":
+				pcap_analyser_eth(file)
+			elif file and level == "ip":
+				pcap_analyser_ip(file)
+			elif file and level == "tcp":
+				pcap_analyser_tcp(file)
+			elif file and level == "udp":
+				pcap_analyser_udp(file)	    
+			elif serveur is not None and level == "arp":
+	   	 		arp_ping(serveur)	
+			elif serveur is not None and level == "icmp":
+	  			icmp_ping(serveur)
+	 		
+			elif serveur is not None and level == "tcp" and sport is not None:
+	      			port = sport
+              			tcp_ping(serveur,port)
+	
+			elif serveur is not None and level == "scan" and sport is not None and eport is not None:
+	 			start_port = sport
+	  			end_port = eport
+	  			flag = 0
+	  			superscan(serveur,start_port,end_port)
+
+			elif serveur is not None and level == "scan" and sport is None and eport is None:
+		    		start_port = 0
+		        	end_port = 0
+	 	        	flag=1
+	 	        	superscan(serveur,start_port,end_port)
+	
+			elif serveur is not None and level == "udp":
+	    	    			udp_ping(serveur,port=0)
+		
+                	elif serveur is not None and level == "geoip":
+				geo_ip(serveur)
+
+		
+
+            else:
+         
+            	print '''usage: CyberScan.py [-h] [-s SERVEUR] [-p LEVEL] [-d SPORT] [-t EPORT]
+                    [-f FILE]
+use cyberscan -h to help '''	
+	
+	except KeyboardInterrupt:
+		print "\n[*] You Pressed Ctrl+C. Exiting"
+		sys.exit(1)	
 
 
 	
-	
-
-	
-
-	
-
-
 if __name__ == '__main__':
-    #os.system('clear')
     main()
+
+    
    
     
     	
