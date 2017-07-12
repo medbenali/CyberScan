@@ -484,7 +484,9 @@ levels with pcap file:
 			elif file and level == "tcp":
 				pcap_analyser_tcp(file)
 			elif file and level == "udp":
-				pcap_analyser_udp(file)	    
+				pcap_analyser_udp(file)	
+			elif file and level == "icmp":
+    				pcap_analyser_icmp(file)
 			elif serveur is not None and level == "arp":
 	   	 		arp_ping(serveur)	
 			elif serveur is not None and level == "icmp":
