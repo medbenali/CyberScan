@@ -52,7 +52,7 @@ def header():
 	"REVISION": REVISION
     }
 
-    PROGRAM_BANNER = open(FileUtils.buildPath("banner.txt")).read().format(**VERSION)
+    PROGRAM_BANNER = open(FileUtils.buildPath('banner.txt')).read().format(**VERSION)
     message = Style.BRIGHT + Fore.RED + PROGRAM_BANNER + Style.RESET_ALL
     write(message)
 
@@ -495,14 +495,14 @@ levels with pcap file:
               			tcp_ping(serveur,port)
 	
 			elif serveur is not None and level == "scan" and sport is not None and eport is not None:
-	 			start_port = sport
-	  			end_port = eport
+	 			start_port = int(sport)
+	  			end_port = int(eport)
 	  			flag = 0
 	  			superscan(serveur,start_port,end_port)
 
 			elif serveur is not None and level == "scan" and sport is None and eport is None:
-		    		start_port = 0
-		        	end_port = 0
+		    		start_port = int(0)
+		        	end_port = int(0)
 	 	        	flag=1
 	 	        	superscan(serveur,start_port,end_port)
 	

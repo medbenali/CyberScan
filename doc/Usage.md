@@ -6,11 +6,11 @@
 Make sure you have CyberScan in your machine:
 
 ```sh
-$ pip install scapy
 $ git clone https://github.com/medbenali/CyberScan.git
 ```
 
 You can test the installation firing up CyberScan iteratively. These are some useful functions:
+
 ```sh
 $ python CyberScan.py -h 
 ```
@@ -22,7 +22,7 @@ We can perform **ping** operations with several protocols using CyberScan The fa
 
 ### ARP Ping
 
-```python
+```sh
 $ CyberScan -s 192.168.1.0/24 -p arp
 [*] Starting Ping ARP for 192.168.1.0/24
 Begin emission:
@@ -79,7 +79,7 @@ and CyberScan is  more rapid then Nmap when we compare the duration of network s
 ![](https://github.com/medbenali/CyberScan/blob/master/images/CyberScanPortScan2.png)
 
 ------
-## Analyzing PCAP Files
+## Analyzing Packets 
 
 CyberScan can analyse pcap files in order to extract ethernet , ip , tcp , icmp , udp headrers .
 
