@@ -24,7 +24,7 @@ You can download CyberScan by cloning the [Git](https://github.com/medbenali/Cyb
 
     git clone https://github.com/medbenali/CyberScan.git
     cd CyberScan/
-    python CyberScan.py -h
+    python CyberScan.py -v
 
 CyberScan works out of the box with [Python](http://www.python.org/download/) version **2.6.x** and **2.7.x**.  
 
