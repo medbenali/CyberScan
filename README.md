@@ -3,7 +3,7 @@
 [![Python 2.6|2.7](https://img.shields.io/badge/python-2.6|2.7-yellow.svg)](https://www.python.org/) [![License](https://img.shields.io/badge/License-GPL%20v3-red.svg)](http://www.gnu.org/licenses/gpl-3.0)
 
 CyberScan is an open source penetration testing tool that 
-can analyse packets , decoding  , scanning ports, pinging and geolocation of an IP including ( latitude, longitude , region , country ...) 
+can analyse packets , decoding  , scanning ports, pinging and geolocation of an IP including (latitude, longitude , region , country ...) 
 
 Screenshots
 ----
