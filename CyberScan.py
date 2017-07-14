@@ -33,7 +33,7 @@ from libs import FileUtils
 if platform.system() == 'Windows':
     from libs.colorama.win32 import *
 
-__version__ = '1.1'
+__version__ = '1.1.1'
 __description__ = '''\
   ___________________________________________
 
@@ -45,7 +45,7 @@ __description__ = '''\
 def header():
     MAYOR_VERSION = 1
     MINOR_VERSION = 1
-    REVISION = 0
+    REVISION = 1
     VERSION = {
 	"MAYOR_VERSION": MAYOR_VERSION,
 	"MINOR_VERSION": MINOR_VERSION,
@@ -57,12 +57,12 @@ def header():
     write(message)
 
 def usage():
-	print (''' \033[92m CyberScan v.1.01 http://github/medbenali/CyberScan
+	print (''' \033[92m CyberScan v.1.1.1 http://github/medbenali/CyberScan
 	It is the end user's responsibility to obey all applicable laws.
 	It is just for server testing script. Your ip is visible. \n
 	  ___________________________________________
 	 
- 	  CyberScan | v.1.01   
+ 	  CyberScan | v.1.1.1   
 	  Author: BEN ALI Mohamed
  	  ___________________________________________
 	
@@ -432,8 +432,6 @@ def main():
 	global eport
 	global file
 	global flag
-	global gw
-	global options
 	flag=0
 	
 	try:

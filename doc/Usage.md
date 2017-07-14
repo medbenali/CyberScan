@@ -125,7 +125,7 @@ WARNING: No route found for IPv6 destination :: (no default route?)
 ------
 ## Analyzing and Decoding Packets 
 
-CyberScan can analyse pcap files in order to extract and decode ethernet ,ip , tcp , icmp , udp headrers .
+CyberScan can analyse pcap files in order to extract and decode ethernet ,ip , tcp , icmp ,udp headrers .
 
 ### Ethernet Headers
 
