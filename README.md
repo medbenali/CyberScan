@@ -1,15 +1,9 @@
 # CyberScan 
-scapy-2.3.2
+
 [![Python 2.6|2.7](https://img.shields.io/badge/python-2.6|2.7-yellow.svg)](https://www.python.org/) [![License](https://img.shields.io/badge/License-GPL%20v3-red.svg)](http://www.gnu.org/licenses/gpl-3.0)
 
-CyberScan is an open source penetration testing tool that automates the process of detecting and exploiting SQL injection flaws and taking over of database servers. It comes with a powerful detection engine, many niche features for the ultimate penetration tester and a broad range of switches lasting from database fingerprinting, over data fetching from the database, to accessing the underlying file system and executing commands on the operating system via out-of-band connections.
-
-Screenshots
-----
-
-![Screenshot](https://github.com/medbenali/CyberScan/blob/master/images/demo.png)
-
-You can visit the [collection of screenshots](https://github.com/sqlmapproject/sqlmap/wiki/Screenshots) demonstrating some of features on the wiki.
+CyberScan is an open source penetration testing tool that 
+can analyse packets , decoding  , scanning ports, pinging and geolocation of an IP including ( latitude, longitude , region , country ...) 
 
 Operating Systems Supported
 ---- 
@@ -20,13 +14,10 @@ Operating Systems Supported
 Installation
 ----
 
-You can download the latest tarball by clicking [here](https://github.com/sqlmapproject/sqlmap/tarball/master) or latest zipball by clicking  [here](https://github.com/sqlmapproject/sqlmap/zipball/master).
-
-Preferably, youn can download CyberScan by cloning the [Git](https://github.com/medbenali/CyberScan) repository:
+You can download CyberScan by cloning the [Git](https://github.com/medbenali/CyberScan) repository:
 
     git clone https://github.com/medbenali/CyberScan.git
     cd CyberScan/
-    apt-get install python-scapy
     python CyberScan.py -h
 
 CyberScan works out of the box with [Python](http://www.python.org/download/) version **2.6.x** and **2.7.x**.  

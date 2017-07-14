@@ -438,7 +438,7 @@ def main():
 	
 	try:
 
-	    parser = argparse.ArgumentParser(description=__description__,formatter_class=argparse.RawTextHelpFormatter,epilog='''\
+	    parser = argparse.ArgumentParser(version=__version__,description=__description__,formatter_class=argparse.RawTextHelpFormatter,epilog='''\
 levels with ip adress:
   scan : scan ports
   arp : ping arp
