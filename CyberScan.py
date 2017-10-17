@@ -24,7 +24,7 @@ import time
 import socket
 import pygeoip
 
-from scapy.all import *
+from scapy import *
 from libs.colorama import *
 from libs import FileUtils
 
