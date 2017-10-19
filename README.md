@@ -28,4 +28,10 @@ You can download CyberScan by cloning the [Git](https://github.com/medbenali/Cyb
 
 CyberScan works out of the box with [Python](http://www.python.org/download/) version **2.6.x** and **2.7.x**.  
 
+Contact
+----
+
+* e-mail: mohamed.benali@esprit.tn
+* Twitter: [@007Hamoud](https://twitter.com/007Hamoud "twitterhandle on twitter")
+
 
