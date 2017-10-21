@@ -25,6 +25,7 @@ import socket
 import pygeoip
 
 from scapy import *
+from scapy.all import *
 from libs.colorama import *
 from libs import FileUtils
 
