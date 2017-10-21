@@ -28,53 +28,77 @@ You can download CyberScan by cloning the [Git](https://github.com/medbenali/Cyb
 
 CyberScan works out of the box with [Python](http://www.python.org/download/) version **2.6.x** and **2.7.x**. 
 
-The CyberScan Module Usage
-CyberScan is able to send and capture packets of several protocols, forging and decoding them to be used to most network tasks such as scanning, pinging, probing, and attacks.
+# The CyberScan Module Usage
+
+
+[CyberScan](https://github.com/medbenali/CyberScan)  is able to send and capture packets of several protocols, forging and decoding them to be used to most network tasks such as scanning, pinging, probing, and attacks.
 
 Make sure you have CyberScan in your machine:
 
+```sh
 $ git clone https://github.com/medbenali/CyberScan.git
+```
+
 You can test the installation firing up CyberScan iteratively. These are some useful functions:
 
+```sh
 $ CyberScan -h 
-Pinging The Network
+```
+---
 
-We can perform ping operations with several protocols using CyberScan The fastest way to discover hosts on a local Ethernet network is to use ARP:
+## Pinging The Network
 
-ARP Ping
+We can perform **ping** operations with several protocols using CyberScan The fastest way to discover hosts on a local Ethernet network is to use ARP:
 
+### ARP Ping
+
+```sh
 $ CyberScan -s 192.168.1.0/24 -p arp
 [*] Starting Ping ARP for 192.168.1.0/24
 Begin emission:
 Finished to send 256 packets.
 
 Received 0 packets, got 0 answers, remaining 256 packets
-ICMP Ping
+```
+
+### ICMP Ping
 
 In other cases we can use ICMP ping:
 
+```sh
 $ CyberScan -s 192.168.1.1-254 -p icmp
 [*] Starting Ping ARP for 192.168.1.0/24
 Begin emission:
 Finished to send 256 packets.
 
 Received 0 packets, got 0 answers, remaining 256 packets
-TCP Ping
+```
 
-In case when ICMP echo requests are blocked, we can still use TCP:
+### TCP Ping
 
+In case when  ICMP echo requests are blocked, we can still use TCP:
+
+```sh
 $ CyberScan -s 192.168.1.1-254 -p tcp -d 80
-UDP Ping
+```
 
-Or even UDP (which produces ICMP port unreachable errors from live hosts). We can pick any port which is most likely to be closed, such as port 0:
+### UDP Ping
 
+Or even  UDP  (which produces ICMP port unreachable errors from live hosts). We can pick any port which is most likely to be closed,  such as port 0:
+
+```sh
 $ CyberScan -s 192.168.*.1-10 -p udp
-Network Scanning
+```
 
-Port Scanner
+---
 
-In CyberSan Tool we can scan with or without specify start and end port
+## Network Scanning 
 
+### Port Scanner
+
+In CyberSan Tool we can scan with or without specify start and end port 
+
+```sh
 $ CyberScan -s 192.168.1.1 -p scan -d 1 -t 100
 WARNING: No route found for IPv6 destination :: (no default route?)
 [*] CyberScan Port Scanner
@@ -88,6 +112,9 @@ WARNING: No route found for IPv6 destination :: (no default route?)
 	23 TELNET: Open
 	53 DNS: Open
 	80 HTTP: Open
+```
+
+```sh
 $ CyberScan -s 8.8.8.8 -p scan
 WARNING: No route found for IPv6 destination :: (no default route?)
 [*] CyberScan Port Scanner
@@ -100,8 +127,13 @@ WARNING: No route found for IPv6 destination :: (no default route?)
 [*] Open Ports: 
 	53 DNS: Open
 	443 HTTPS: Open
-Geolicalisation IP
+```
 
+
+------
+## Geolicalisation IP
+
+```sh
 $ CyberScan -s 72.229.28.185 -p geoip
 WARNING: No route found for IPv6 destination :: (no default route?)
 [*] IP Adress:  72.229.28.185
@@ -118,12 +150,16 @@ WARNING: No route found for IPv6 destination :: (no default route?)
 [*] Country Code:  US
 [*] Country Code3:  USA
 [*] Countinent:  NA
-Analyzing and Decoding Packets
+```
+
+------
+## Analyzing and Decoding Packets 
 
 CyberScan can analyse pcap files in order to extract and decode ethernet ,ip , tcp , icmp ,udp headrers .
 
-Ethernet Headers
+### Ethernet Headers
 
+```sh
 $ CyberScan -f test.pcap -p eth
 WARNING: No route found for IPv6 destination :: (no default route?)
 ----------------------------------------
@@ -132,8 +168,11 @@ WARNING: No route found for IPv6 destination :: (no default route?)
 [*] Mac Destination : 00:1f:f3:3c:e1:13
 [*] Mac Source : f8:1e:df:e5:84:3a
 [*] Ethernet Type : 2048
-IP Headers
+```
 
+### IP Headers
+
+```sh
 $ CyberScan -f test.pcap -p ip
 WARNING: No route found for IPv6 destination :: (no default route?)
 ----------------------------------------
@@ -158,8 +197,11 @@ WARNING: No route found for IPv6 destination :: (no default route?)
 0020   80 18 FF FF CB 8C 00 00  01 01 08 0A 1A 7D 84 2C   .............}.,
 0030   37 C5 58 B0 15 03 01 00  16 43 1A 88 1E FA 7A BC   7.X......C....z.
 0040   22 6E E6 32 7A 53 47 00  A7 5D CC 64 EA 8E 92      "n.2zSG..].d...
-TCP Headers
+```
 
+### TCP Headers
+
+```sh
 $ CyberScan -f test.pcap -p tcp
 WARNING: No route found for IPv6 destination :: (no default route?)
 ----------------------------------------
@@ -179,8 +221,12 @@ WARNING: No route found for IPv6 destination :: (no default route?)
 [*] TCP Dump : 
 0000   FC 35 01 BB C6 D9 14 D0  C5 1E 2D BF 80 18 FF FF   .5........-.....
 0010   CB 8C 00 00 01 01 08 0A  1A 7D 84 2C 37 C5 58 B0   .........}.,7.X.
-UDP Headers
+```
 
+
+### UDP Headers
+
+```sh
 $ CyberScan -f test.pcap -p udp
 WARNING: No route found for IPv6 destination :: (no default route?)
 ----------------------------------------
@@ -194,8 +240,11 @@ WARNING: No route found for IPv6 destination :: (no default route?)
 0000   D5 6F 00 35 00 2F 75 84  13 A2 01 00 00 01 00 00   .o.5./u.........
 0010   00 00 00 00 04 65 38 37  32 01 67 0A 61 6B 61 6D   .....e872.g.akam
 0020   61 69 65 64 67 65 03 6E  65 74 00 00 01 00 01      aiedge.net.....
-ICMP Headers
+```
 
+### ICMP Headers
+
+```sh
 $ CyberScan -f test.pcap -p icmp
 WARNING: No route found for IPv6 destination :: (no default route?)
 ----------------------------------------
@@ -210,6 +259,7 @@ WARNING: No route found for IPv6 destination :: (no default route?)
 0000   03 03 14 B0 00 00 00 00  45 00 00 43 C1 80 00 00   ........E..C....
 0010   40 11 4A FC AC 10 0B 01  AC 10 0B 0C 00 35 E7 E8   @.J..........5..
 0020   00 2F 00 00                                        ./..
+```
 
 Contact
 ----
