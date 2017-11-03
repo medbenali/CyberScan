@@ -269,12 +269,21 @@ Contact
 [3.1]: http://i.imgur.com/yCsTjba.png (google plus icon with padding)
 [4.1]: http://i.imgur.com/YckIOms.png (tumblr icon with padding)
 
+[10.1]: http://i.imgur.com/tXSoThF.png (twitter icon with padding)
+[20.1]: http://i.imgur.com/P3YfQoD.png (facebook icon with padding)
+[30.1]: http://i.imgur.com/0o48UoR.png (github icon with padding)
+
 
 
 
 [1]: https://twitter.com/Esprit_News
 [2]: https://www.facebook.com/esprit.tn
 [3]: https://plus.google.com/+ESPRITEcoleSupPrivéedIngénierieetdeTechnologies
+
+[10]: https://twitter.com/007Hamoud
+[20]: https://www.facebook.com/hammouda.benali
+[30]: https://www.github.com/medbenali
+
 
 
 
@@ -284,7 +293,7 @@ Contact
 #### University : Esprit school of engineering
 
 ![](https://media.licdn.com/mpr/mpr/shrink_200_200/AAEAAQAAAAAAAAI4AAAAJDQxNzI0ZTY0LWZkYWMtNDdkOS1hN2IyLWEzZmMxNTk4ZjUyYg.png)
-* Homepage: www.esprit.tn
+Homepage: www.esprit.tn
 
 [![alt text][1.1]][1]
 [![alt text][2.1]][2]
@@ -292,6 +301,13 @@ Contact
 
 
 #### Author : BEN ALI Mohamed
+
+[![alt text][10.1]][10]
+[![alt text][20.1]][20]
+[![alt text][30.1]][30]
+
+
+
 * e-mail: mohamed.benali@esprit.tn
 * Twitter: [@007Hamoud](https://twitter.com/007Hamoud "twitterhandle on twitter")
 
