@@ -283,7 +283,7 @@ Contact
 
 #### University : Esprit school of engineering
 
-![](http://www.lepointtn.com/wp-content/uploads/2015/08/Logo_ESPRIT_-_Tunisie.png)
+![](https://media.licdn.com/mpr/mpr/shrink_200_200/AAEAAQAAAAAAAAI4AAAAJDQxNzI0ZTY0LWZkYWMtNDdkOS1hN2IyLWEzZmMxNTk4ZjUyYg.png)
 * Homepage: www.esprit.tn
 
 [![alt text][1.1]][1]
