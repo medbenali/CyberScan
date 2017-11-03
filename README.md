@@ -293,18 +293,6 @@ e-mail: mohamed.benali@esprit.tn
 [![alt text][30.1]][30]
 
 
-
-* e-mail: mohamed.benali@esprit.tn
-
-
-
-
-
-
-
-
-
-
 #### University : Esprit school of engineering
 
 ![](https://media.licdn.com/mpr/mpr/shrink_200_200/AAEAAQAAAAAAAAI4AAAAJDQxNzI0ZTY0LWZkYWMtNDdkOS1hN2IyLWEzZmMxNTk4ZjUyYg.png)
