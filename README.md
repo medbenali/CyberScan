@@ -286,21 +286,20 @@ Contact
 
 
 
-#### Author : BEN ALI Mohamed  
-##### mohamed.benali@esprit.tn
+#### Author : BEN ALI Mohamed 
 [![alt text][10.1]][10]
 [![alt text][20.1]][20]
 [![alt text][30.1]][30]
-
+##### Email : mohamed.benali@esprit.tn
 
 #### University : Esprit school of engineering
-#### Homepage : www.esprit.tn
-
-![](https://media.licdn.com/mpr/mpr/shrink_200_200/AAEAAQAAAAAAAAI4AAAAJDQxNzI0ZTY0LWZkYWMtNDdkOS1hN2IyLWEzZmMxNTk4ZjUyYg.png)
-
 [![alt text][1.1]][1]
 [![alt text][2.1]][2]
 [![alt text][3.1]][3]
+#### Homepage : www.esprit.tn
+
+![](http://www.lepointtn.com/wp-content/uploads/2015/08/Logo_ESPRIT_-_Tunisie.png)
+
 
 
 
