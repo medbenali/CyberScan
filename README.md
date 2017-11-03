@@ -289,7 +289,7 @@ Contact
 [![alt text][3.1]][3]
 [![alt text][4.1]][4]
 
-#### Author BEN ALI Mohamed
+#### Author : BEN ALI Mohamed
 * e-mail: mohamed.benali@esprit.tn
 * Twitter: [@007Hamoud](https://twitter.com/007Hamoud "twitterhandle on twitter")
 
