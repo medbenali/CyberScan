@@ -289,13 +289,6 @@ Contact
 [![alt text][3.1]][3]
 [![alt text][4.1]][4]
 
-
-#### University 
-Esprit school of engineering
-* Homepage: www.esprit.tn
-* Facebook: 
-* Twitter:
-
 #### Author BEN ALI Mohamed
 * e-mail: mohamed.benali@esprit.tn
 * Twitter: [@007Hamoud](https://twitter.com/007Hamoud "twitterhandle on twitter")
