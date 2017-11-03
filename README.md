@@ -275,7 +275,7 @@ Contact
 [1]: https://twitter.com/Esprit_News
 [2]: https://www.facebook.com/esprit.tn
 [3]: https://plus.google.com/+ESPRITEcoleSupPrivéedIngénierieetdeTechnologies
-[4]: http://carlsed.tumblr.com
+
 
 
 
@@ -287,7 +287,7 @@ Contact
 [![alt text][1.1]][1]
 [![alt text][2.1]][2]
 [![alt text][3.1]][3]
-[![alt text][4.1]][4]
+
 
 #### Author : BEN ALI Mohamed
 * e-mail: mohamed.benali@esprit.tn
