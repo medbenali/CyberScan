@@ -286,6 +286,21 @@ Contact
 
 
 
+#### Author : BEN ALI Mohamed
+e-mail: mohamed.benali@esprit.tn
+[![alt text][10.1]][10]
+[![alt text][20.1]][20]
+[![alt text][30.1]][30]
+
+
+
+* e-mail: mohamed.benali@esprit.tn
+
+
+
+
+
+
 
 
 
@@ -298,20 +313,6 @@ Homepage: www.esprit.tn
 [![alt text][1.1]][1]
 [![alt text][2.1]][2]
 [![alt text][3.1]][3]
-
-
-#### Author : BEN ALI Mohamed
-
-[![alt text][10.1]][10]
-[![alt text][20.1]][20]
-[![alt text][30.1]][30]
-
-
-
-* e-mail: mohamed.benali@esprit.tn
-* Twitter: [@007Hamoud](https://twitter.com/007Hamoud "twitterhandle on twitter")
-
-
 
 
 
