@@ -264,10 +264,7 @@ WARNING: No route found for IPv6 destination :: (no default route?)
 Contact
 ----
 
-[1.1]: http://i.imgur.com/tXSoThF.png (twitter icon with padding)
-[2.1]: http://i.imgur.com/P3YfQoD.png (facebook icon with padding)
-[3.1]: http://i.imgur.com/yCsTjba.png (google plus icon with padding)
-[4.1]: http://i.imgur.com/YckIOms.png (tumblr icon with padding)
+
 
 [10.1]: http://i.imgur.com/tXSoThF.png (twitter icon with padding)
 [20.1]: http://i.imgur.com/P3YfQoD.png (facebook icon with padding)
@@ -276,9 +273,7 @@ Contact
 
 
 
-[1]: https://twitter.com/Esprit_News
-[2]: https://www.facebook.com/esprit.tn
-[3]: https://plus.google.com/+ESPRITEcoleSupPrivéedIngénierieetdeTechnologies
+
 
 [10]: https://twitter.com/007Hamoud
 [20]: https://www.facebook.com/hammouda.benali
@@ -292,13 +287,7 @@ Contact
 [![alt text][30.1]][30]
 ##### Email : mohamed.benali@esprit.tn
 
-#### University : Esprit school of engineering
-[![alt text][1.1]][1]
-[![alt text][2.1]][2]
-[![alt text][3.1]][3]
-#### Homepage : www.esprit.tn
 
-![](http://www.lepointtn.com/wp-content/uploads/2015/08/Logo_ESPRIT_-_Tunisie.png)
 
 
 
