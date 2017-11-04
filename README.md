@@ -281,7 +281,7 @@ Contact
 
 
 
-#### Author : BEN ALI Mohamed 
+#### BEN ALI Mohamed 
 [![alt text][10.1]][10]
 [![alt text][20.1]][20]
 [![alt text][30.1]][30]
