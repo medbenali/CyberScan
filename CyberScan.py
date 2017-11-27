@@ -101,7 +101,7 @@ def geo_ip(host):
        zip_code = data['postal_code']
        continent = data['continent']
 
-       print '[*] IP Adress: ',host
+       print '[*] IP Address: ',host
        print '[*] City: ',city
        print '[*] Region Code: ',region_code
        print '[*] Area Code: ',area_code
@@ -114,7 +114,7 @@ def geo_ip(host):
        print '[*] Country Name: ',country
        print '[*] Country Code: ',country_code
        print '[*] Country Code3: ',country_code3
-       print '[*] Countinent: ',continent
+       print '[*] Continent: ',continent
 
     except :
            print "[*] Please verify your ip !"
