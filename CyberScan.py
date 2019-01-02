@@ -20,6 +20,8 @@ import os
 import sys
 import platform
 import argparse
+import logging
+logging.getLogger("scapy.runtime").setLevel(logging.ERROR)
 import time
 import socket
 import pygeoip
