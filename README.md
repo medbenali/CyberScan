@@ -131,12 +131,12 @@ WARNING: No route found for IPv6 destination :: (no default route?)
 
 
 ------
-## Geolicalisation IP
+## Geolocalisation IP
 
 ```sh
 $ CyberScan -s 72.229.28.185 -p geoip
 WARNING: No route found for IPv6 destination :: (no default route?)
-[*] IP Adress:  72.229.28.185
+[*] IP Address:  72.229.28.185
 [*] City:  New York
 [*] Region Code:  NY
 [*] Area Code:  212
@@ -149,13 +149,13 @@ WARNING: No route found for IPv6 destination :: (no default route?)
 [*] Country Name:  United States
 [*] Country Code:  US
 [*] Country Code3:  USA
-[*] Countinent:  NA
+[*] Continent:  NA
 ```
 
 ------
 ## Analyzing and Decoding Packets 
 
-CyberScan can analyse pcap files in order to extract and decode ethernet ,ip , tcp , icmp ,udp headrers .
+CyberScan can analyse pcap files in order to extract and decode ethernet, ip, tcp, icmp, udp headers.
 
 ### Ethernet Headers
 
