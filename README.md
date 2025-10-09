@@ -8,7 +8,7 @@ can analyse packets , decoding  , scanning ports, pinging and geolocation of an 
 Screenshots
 ----
 
-![Screenshot](https://github.com/medbenali/CyberScan/blob/master/images/demo.png)
+![Screenshot](https://github.com/medbenali/CyberScan/blob/master/images/demo.png)+*
 
 Operating Systems Supported
 ---- 
@@ -17,16 +17,34 @@ Operating Systems Supported
 - GNU/Linux
 - MacOSX
 
-Installation
-----
+## Dependencies / Installation
 
-You can download CyberScan by cloning the [Git](https://github.com/medbenali/CyberScan) repository:
+CyberScan relies on libpcap bindings (pcapy or compatible) and scapy.
 
-    git clone https://github.com/medbenali/CyberScan.git
-    cd CyberScan/
-    python CyberScan.py -v
+### Linux / macOS
+1. Install system libpcap (Linux usually has it by default).
+2. Create virtualenv (recommended):
+   $ python2 -m virtualenv venv            # if you want Python 2
+   $ source venv/bin/activate
+3. Install Python packages:
+   $ pip install -r requirements.txt
 
-CyberScan works out of the box with [Python](http://www.python.org/download/) version **2.6.x** and **2.7.x**. 
+### Windows
+1. Install **Npcap** (recommended) from https://nmap.org/npcap/ — choose "WinPcap API-compatible mode".
+2. Install pre-built Python wheel for pcapy if needed (e.g. `pcapy-ng` or `pcapy` wheel).
+3. Install requirements:
+   $ pip install -r requirements.txt
+
+### Termux (Android)
+- This project was written for Python 2. If your Termux environment uses Python3, run:
+  $ pkg install python2
+  $ pip2 install -r requirements.txt
+- If you run into `raw_input` errors, call the script with `python2 CyberScan.py` or use the compatibility shim in the code which maps `raw_input` to `input` on Python3.
+
+If you still see `ImportError: No module named pcapy`:
+- On Linux try `pip install pcapy` or `pip install pcapy-ng` (or `pure-pcapy3` if building is an issue).
+- On Windows, install Npcap first (see above), then install the appropriate pcapy wheel (or use pcapy-ng).
+
 
 # The CyberScan Module Usage
 
