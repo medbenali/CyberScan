@@ -41,6 +41,7 @@ CyberScan relies on libpcap bindings (pcapy or compatible) and scapy.
   $ pip2 install -r requirements.txt
 - If you run into `raw_input` errors, call the script with `python2 CyberScan.py` or use the compatibility shim in the code which maps `raw_input` to `input` on Python3.
 
+
 If you still see `ImportError: No module named pcapy`:
 - On Linux try `pip install pcapy` or `pip install pcapy-ng` (or `pure-pcapy3` if building is an issue).
 - On Windows, install Npcap first (see above), then install the appropriate pcapy wheel (or use pcapy-ng).
