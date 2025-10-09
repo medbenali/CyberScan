@@ -41,7 +41,8 @@ __description__ = '''\
   ___________________________________________
 
   CyberScan | v.''' + __version__ + '''
-  Author: BEN ALI Mohamed
+  Original Author: BEN ALI Mohamed
+  Modified by: itsmemohamednaseem-rgb (https://github.com/itsmemohamednaseem-rgb)
   ___________________________________________
 '''
 
@@ -60,7 +61,7 @@ def header():
     write(message)
 
 def usage():
-	print (''' \033[92m CyberScan v.1.1.1 http://github/medbenali/CyberScan
+	print (''' \033[92m CyberScan v.1.1.1 http://github.com/itsmemohamednaseem-rgb/CyberScan
 	It is the end user's responsibility to obey all applicable laws.
 	It is just for server testing script. Your ip is visible. \n
 	  ___________________________________________
@@ -74,14 +75,14 @@ def usage():
 	
 def write(string):
     if platform.system() == 'Windows':
-	sys.stdout.write(string)
+        sys.stdout.write(string)
         sys.stdout.flush()
-	sys.stdout.write('\n')
-	sys.stdout.flush()
+        sys.stdout.write('\n')
+        sys.stdout.flush()
     else:
-	sys.stdout.write(string + '\n')
-    sys.stdout.flush()
-    sys.stdout.flush()
+        sys.stdout.write(string + '\n')
+        sys.stdout.flush()
+        sys.stdout.flush()
 
 def geo_ip(host):
 
@@ -103,23 +104,23 @@ def geo_ip(host):
        zip_code = data['postal_code']
        continent = data['continent']
 
-       print '[*] IP Address: ',host
-       print '[*] City: ',city
-       print '[*] Region Code: ',region_code
-       print '[*] Area Code: ',area_code
-       print '[*] Time Zone: ',time_zone
-       print '[*] Dma Code: ',dma_code
-       print '[*] Metro Code: ',metro_code
-       print '[*] Latitude: ',lat
-       print '[*] Longitude: ',longi
-       print '[*] Zip Code: ',zip_code
-       print '[*] Country Name: ',country
-       print '[*] Country Code: ',country_code
-       print '[*] Country Code3: ',country_code3
-       print '[*] Continent: ',continent
+       print('[*] IP Address: {}'.format(host))
+       print('[*] City: {}'.format(city))
+       print('[*] Region Code: {}'.format(region_code))
+       print('[*] Area Code: {}'.format(area_code))
+       print('[*] Time Zone: {}'.format(time_zone))
+       print('[*] Dma Code: {}'.format(dma_code))
+       print('[*] Metro Code: {}'.format(metro_code))
+       print('[*] Latitude: {}'.format(lat))
+       print('[*] Longitude: {}'.format(longi))
+       print('[*] Zip Code: {}'.format(zip_code))
+       print('[*] Country Name: {}'.format(country))
+       print('[*] Country Code: {}'.format(country_code))
+       print('[*] Country Code3: {}'.format(country_code3))
+       print('[*] Continent: {}'.format(continent))
 
     except :
-           print "[*] Please verify your ip !"
+                  print("[*] Please verify your ip!")
 	   	
 
     	
