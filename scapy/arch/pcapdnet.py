@@ -17,6 +17,7 @@ from scapy.supersocket import SuperSocket
 from scapy.error import Scapy_Exception
 import scapy.arch
 
+<<<<<<< HEAD
 # Ensure these names exist at module level so imports like
 # `from scapy.arch import pcapdnet` always find them even if
 # pcap/dnet are not available.
@@ -79,6 +80,8 @@ try:
 except Exception:
     conf.L2socket = _UnavailableL2Socket
 
+=======
+>>>>>>> origin/master
 
 
 if conf.use_pcap:    
@@ -220,7 +223,11 @@ if conf.use_pcap:
 if conf.use_dnet:
     try:
         import dnet
+<<<<<<< HEAD
     except ImportError as e:
+=======
+    except ImportError,e:
+>>>>>>> origin/master
         if conf.interactive:
             log_loading.error("Unable to import dnet module: %s" % e)
             conf.use_dnet = False
