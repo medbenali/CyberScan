@@ -1,12 +1,13 @@
 #!/usr/bin/env python
 
 import sys
+import os
 import argparse
 import time
 import socket
 
 try:
-    from scapy.all import *
+    from scapy.all import sr, srp, rdpcap, Ether, ARP, IP, TCP, UDP, ICMP, hexdump
 except ImportError:
     print("Scapy is not installed. Please run: pip install scapy")
     sys.exit(1)
@@ -25,49 +26,48 @@ except ImportError:
     sys.exit(1)
 
 __version__ = '1.1.1'
-__description__ = f'''
-  ___________________________________________
-
-  CyberScan | v.{__version__}
-  Author: BEN ALI Mohamed
-  ___________________________________________
-'''
+__description__ = (
+    "  ___________________________________________\n"
+    f"  CyberScan | v.{__version__}\n"
+    "  Author: BEN ALI Mohamed\n"
+    "  ___________________________________________\n"
+)
 
 def header():
-    if not os.path.isfile('banner.txt'):
+    banner_file = 'banner.txt'
+    if not os.path.isfile(banner_file):
         print(Style.BRIGHT + Fore.RED + "CyberScan Banner\n" + Style.RESET_ALL)
         return
-    with open('banner.txt', 'r') as f:
-        PROGRAM_BANNER = f.read()
-    message = Style.BRIGHT + Fore.RED + PROGRAM_BANNER + Style.RESET_ALL
+    with open(banner_file, 'r') as f:
+        program_banner = f.read()
+    message = Style.BRIGHT + Fore.RED + program_banner + Style.RESET_ALL
     print(message)
 
 def usage():
-    print(f'''\033[92m CyberScan v.{__version__} http://github/medbenali/CyberScan
-It is the end user's responsibility to obey all applicable laws.
-It is just for server testing script. Your ip is visible.
-
-  ___________________________________________
-
-  CyberScan | v.{__version__}
-  Author: BEN ALI Mohamed
-  ___________________________________________
-
-\033[0m''')
+    print(
+        f"\033[92m CyberScan v.{__version__} http://github/medbenali/CyberScan\n"
+        "It is the end user's responsibility to obey all applicable laws.\n"
+        "It is just for server testing script. Your ip is visible.\n\n"
+        "  ___________________________________________\n\n"
+        f"  CyberScan | v.{__version__}\n"
+        "  Author: BEN ALI Mohamed\n"
+        "  ___________________________________________\n\n\033[0m"
+    )
 
 def geo_ip(host):
-    if not os.path.isfile('GeoLiteCity.dat'):
+    geo_db = 'GeoLiteCity.dat'
+    if not os.path.isfile(geo_db):
         print("[*] GeoLiteCity.dat file is missing!")
         return
     try:
-        rawdata = pygeoip.GeoIP('GeoLiteCity.dat')
+        rawdata = pygeoip.GeoIP(geo_db)
         data = rawdata.record_by_name(host)
         if not data:
             print("[*] No geolocation data found for IP.")
             return
         for k, v in data.items():
             print(f"[*] {k.replace('_', ' ').title()}: {v}")
-    except Exception as e:
+    except Exception:
         print("[*] Please verify your ip or GeoLiteCity.dat file!")
 
 def arp_ping(host):
@@ -236,22 +236,21 @@ def main():
     parser = argparse.ArgumentParser(
         description=__description__,
         formatter_class=argparse.RawTextHelpFormatter,
-        epilog='''\
-levels with ip address:
-  scan : scan ports
-  arp : ping arp
-  icmp : ping icmp
-  tcp : ping tcp
-  udp : ping udp
-  geoip : geolocalisation
-
-levels with pcap file:
-  eth : extract ethernet headers
-  ip : extract ip headers
-  tcp : extract tcp headers
-  udp : extract udp headers
-  icmp : extract icmp headers
-        '''
+        epilog=(
+            "levels with ip address:\n"
+            "  scan : scan ports\n"
+            "  arp : ping arp\n"
+            "  icmp : ping icmp\n"
+            "  tcp : ping tcp\n"
+            "  udp : ping udp\n"
+            "  geoip : geolocalisation\n\n"
+            "levels with pcap file:\n"
+            "  eth : extract ethernet headers\n"
+            "  ip : extract ip headers\n"
+            "  tcp : extract tcp headers\n"
+            "  udp : extract udp headers\n"
+            "  icmp : extract icmp headers\n"
+        )
     )
 
     parser.add_argument("-s", "--serveur", dest="serveur", help="attack to serveur ip")
@@ -296,8 +295,10 @@ levels with pcap file:
             elif serveur and level == "geoip":
                 geo_ip(serveur)
         else:
-            print('''usage: CyberScan.py [-h] [-s SERVEUR] [-p LEVEL] [-d SPORT] [-t EPORT] [-f FILE]
-use cyberscan -h to help''')
+            print(
+                "usage: CyberScan.py [-h] [-s SERVEUR] [-p LEVEL] [-d SPORT] [-t EPORT] [-f FILE]\n"
+                "use cyberscan -h to help"
+            )
     except KeyboardInterrupt:
         print("\n[*] You Pressed Ctrl+C. Exiting")
         sys.exit(1)
