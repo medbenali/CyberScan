@@ -17,6 +17,71 @@ from scapy.supersocket import SuperSocket
 from scapy.error import Scapy_Exception
 import scapy.arch
 
+<<<<<<< HEAD
+# Ensure these names exist at module level so imports like
+# `from scapy.arch import pcapdnet` always find them even if
+# pcap/dnet are not available.
+pcap = None
+
+# Minimal fallback dnet instance so callers can safely call
+# `pcapdnet.dnet.intf()` even if the real dnet module isn't
+# installed. If a real dnet is imported later, it will overwrite
+# this name.
+class _FallbackDnet(object):
+    INTF_TYPE_ETH = 1
+    ADDR_TYPE_IP6 = 6
+
+    class _IntfProxy(list):
+        def get(self, name, default=None):
+            raise KeyError
+        def get_dst(self, addr):
+            raise OSError
+
+    def intf(self):
+        return _FallbackDnet._IntfProxy()
+
+    def eth(self, *args, **kwargs):
+        raise Scapy_Exception("dnet.eth not available")
+
+    def ip(self, *args, **kwargs):
+        raise Scapy_Exception("dnet.ip not available")
+
+    def addr(self, *args, **kwargs):
+        class _Addr(object):
+            def __init__(self, **kw):
+                self.type = kw.get('type', 2)
+                self.addrtxt = kw.get('addrtxt', None)
+            def __str__(self):
+                return self.addrtxt or ""
+        return _Addr(**kwargs)
+
+dnet = _FallbackDnet()
+
+def open_pcap(*args, **kwargs):
+    raise Scapy_Exception("pcap support not available")
+
+# If no real L2 socket implementations were configured (because pcap/dnet
+# are missing), provide a fallback that raises a clear error when used.
+class _UnavailableL2Socket(SuperSocket):
+    desc = "no-op L2 socket (pcap/dnet missing)"
+    def __init__(self, *args, **kwargs):
+        raise Scapy_Exception("No L2 socket available: pcap/pcapy/pypcap or dnet is not installed.\n"
+                              "Install Npcap/WinPcap and pcapy (or pypcap) and/or dnet to enable live packet capture/send.")
+
+# Only set these fallbacks if real implementations were not provided earlier
+try:
+    if getattr(conf, 'L2listen', None) is None:
+        conf.L2listen = _UnavailableL2Socket
+except Exception:
+    conf.L2listen = _UnavailableL2Socket
+try:
+    if getattr(conf, 'L2socket', None) is None:
+        conf.L2socket = _UnavailableL2Socket
+except Exception:
+    conf.L2socket = _UnavailableL2Socket
+
+=======
+>>>>>>> origin/master
 
 
 if conf.use_pcap:    
@@ -158,7 +223,11 @@ if conf.use_pcap:
 if conf.use_dnet:
     try:
         import dnet
+<<<<<<< HEAD
+    except ImportError as e:
+=======
     except ImportError,e:
+>>>>>>> origin/master
         if conf.interactive:
             log_loading.error("Unable to import dnet module: %s" % e)
             conf.use_dnet = False

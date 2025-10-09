@@ -583,14 +583,30 @@ def main(argv):
         
         try:
             from scapy import all as scapy
+<<<<<<< HEAD
+<<<<<<< HEAD
         except ImportError,e:
+=======
+        except ImportError as e:
+>>>>>>> 81384f7 (Fixed Error on indentation, typos and bug)
+=======
+        except ImportError,e:
+>>>>>>> origin/master
             raise getopt.GetoptError("cannot import [%s]: %s" % (SCAPY,e))
 
         for m in MODULES:
             try:
                 mod = import_module(m)
                 __builtin__.__dict__.update(mod.__dict__)
+<<<<<<< HEAD
+<<<<<<< HEAD
             except ImportError,e:
+=======
+            except ImportError as e:
+>>>>>>> 81384f7 (Fixed Error on indentation, typos and bug)
+=======
+            except ImportError,e:
+>>>>>>> origin/master
                 raise getopt.GetoptError("cannot import [%s]: %s" % (m,e))
                 
     except getopt.GetoptError,msg:

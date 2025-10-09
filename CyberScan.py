@@ -26,12 +26,21 @@ import time
 import socket
 import pygeoip
 
+#new imports
+import urllib2
+import re
+import urllib
+import json
+import csv
+
+from concurrent.futures import ThreadPoolExecutor, as_completed
 from scapy import *
 from scapy.all import *
 from libs.colorama import *
 from libs import FileUtils
 
 
+output_file = args.output
 
 if platform.system() == 'Windows':
     from libs.colorama.win32 import *
@@ -59,6 +68,12 @@ def header():
     message = Style.BRIGHT + Fore.RED + PROGRAM_BANNER + Style.RESET_ALL
     write(message)
 
+#new write function
+def write(string):
+    sys.stdout.write(string + '\n')
+    sys.stdout.flush()
+    sys.stdout.flush()
+
 def usage():
 	print (''' \033[92m CyberScan v.1.1.1 http://github/medbenali/CyberScan
 	It is the end user's responsibility to obey all applicable laws.
@@ -68,20 +83,24 @@ def usage():
  	  CyberScan | v.1.1.1   
 	  Author: BEN ALI Mohamed
  	  ___________________________________________
-	
+
+levels with ip adress:
+  scan : scan ports
+  arp : ping arp
+  icmp : ping arp
+  tcp : ping tcp
+  udp : ping udp
+  geoip : geolocalisation
+  subdomain : subdomain enumeration using dnsdumpster.com
+
+levels with pcap file:
+  eth : extract ethernet headers
+  ip : extract 	ip headers
+  tcp : extract tcp headers
+  udp : extract udp headers
+  icmp : extract icmp headers
 
 	\n \033[0m''')
-	
-def write(string):
-    if platform.system() == 'Windows':
-	sys.stdout.write(string)
-        sys.stdout.flush()
-	sys.stdout.write('\n')
-	sys.stdout.flush()
-    else:
-	sys.stdout.write(string + '\n')
-    sys.stdout.flush()
-    sys.stdout.flush()
 
 def geo_ip(host):
 
@@ -142,120 +161,104 @@ def udp_ping(host,port=0):
     ans, unans = sr(IP(dst=host)/UDP(dport=port))
     ans.summary(lambda(s, r): r.sprintf("%IP.src% is alive"))
 
-def superscan(host,start_port,end_port):
-	print '[*] CyberScan Port Scanner'
-	open_ports = []
-	common_ports = {
-		'21': 'FTP',
-		'22': 'SSH',
-		'23': 'TELNET',
-		'25': 'SMTP',
-		'53': 'DNS',
-		'69': 'TFTP',
-		'80': 'HTTP',
-		'109': 'POP2',
-		'110': 'POP3',
-		'123': 'NTP',
-		'137': 'NETBIOS-NS',
-		'138': 'NETBIOS-DGM',
-		'139': 'NETBIOS-SSN',
-		'143': 'IMAP',
-		'156': 'SQL-SERVER',
-		'389': 'LDAP',
-		'443': 'HTTPS',
-		'546': 'DHCP-CLIENT',
-		'547': 'DHCP-SERVER',
-		'993': 'IMAP-SSL',
-		'995': 'POP3-SSL',
-		'2082': 'CPANEL',
-		'2083': 'CPANEL',
-		'2086': 'WHM/CPANEL',
-		'2087': 'WHM/CPANEL',
-		'3306' :'MYSQL',
-		'8443': 'PLESK',
-		'10000': 'VIRTUALMIN/WEBIN'
-		
-	
-	}
+from concurrent.futures import ThreadPoolExecutor, as_completed
 
-	starting_time=time.time()
-	if(flag):
-		print "[*] Scanning For Most Common Ports On %s" % (host)
-	else:
-		print "[*] Scanning %s From Port %s To %s: " % (host,start_port,end_port)
-	print "[*] Starting CyberScan 1.01 at %s" %(time.strftime("%Y-%m-%d %H:%M %Z"))
-	def check_port(host,port,result= 1):
-		try:
-			sock = socket.socket(socket.AF_INET,socket.SOCK_STREAM)
-			sock.settimeout(0.5)
-			r = sock.connect_ex((host,port))
-			if r ==0:
-				result = r
-			sock.close()
-		except Exception, e:
-			pass
-		return result
+#Updated superscan function with threading and output options
+import json
+import csv
+from concurrent.futures import ThreadPoolExecutor, as_completed
 
-	def get_service(port):
-		port = str(port)
-		if port in common_ports:
-			return common_ports[port]
-		else:
-			return 0
-	try:
-		print "[*] Scan In Progress ..."
-		print "[*] Connecting To Port : ",
-		
-		if flag:
-			for p in sorted(common_ports):
-				sys.stdout.flush()
-				p = int(p)
-				print p,
-				response = check_port(host,p)
+def superscan(host, start_port, end_port, max_threads=100, output_file=None):
+    print '[*] CyberScan Threaded Port Scanner'
+    open_ports = []
+    common_ports = {
+        '21': 'FTP', '22': 'SSH', '23': 'TELNET', '25': 'SMTP', '53': 'DNS',
+        '69': 'TFTP', '80': 'HTTP', '109': 'POP2', '110': 'POP3', '123': 'NTP',
+        '137': 'NETBIOS-NS', '138': 'NETBIOS-DGM', '139': 'NETBIOS-SSN',
+        '143': 'IMAP', '156': 'SQL-SERVER', '389': 'LDAP', '443': 'HTTPS',
+        '546': 'DHCP-CLIENT', '547': 'DHCP-SERVER', '993': 'IMAP-SSL',
+        '995': 'POP3-SSL', '2082': 'CPANEL', '2083': 'CPANEL',
+        '2086': 'WHM/CPANEL', '2087': 'WHM/CPANEL', '3306': 'MYSQL',
+        '8443': 'PLESK', '10000': 'VIRTUALMIN/WEBIN'
+    }
 
-				if response ==0:
-					open_ports.append(p)
+    def get_service(port):
+        port = str(port)
+        return common_ports.get(port, "Unknown service")
 
-					sys.stdout.write('\b' * len(str(p)))
+    def check_port(port):
+        try:
+            sock = socket.socket(socket.AF_INET, socket.SOCK_STREAM)
+            sock.settimeout(0.5)
+            result = sock.connect_ex((host, port))
+            sock.close()
+            if result == 0:
+                return port
+        except:
+            pass
+        return None
 
-	
-		else:
-			for p in range(start_port,end_port+1):
-				sys.stdout.flush()
-				print p,
-				response = check_port(host,p)
-			
-				if response ==0:
-					open_ports.append(p)
-				if not p == end_port:
-					sys.stdout.write('\b' * len(str(p)))
+    starting_time = time.time()
 
-		print "\n[*] Scanning Completed at %s" %(time.strftime("%Y-%m-%d %H:%M %Z"))
-		ending_time = time.time()
-		total_time = ending_time - starting_time
-		if total_time <=60:
-			print "[*] CyberScan done: 1IP address (1host up) scanned in %.2f seconds" %(total_time)
+    # Ports to scan
+    if flag:
+        ports_to_scan = [int(p) for p in common_ports.keys()]
+        print "[*] Scanning most common ports on %s" % host
+    else:
+        ports_to_scan = range(start_port, end_port + 1)
+        print "[*] Scanning %s from port %s to %s" % (host, start_port, end_port)
 
-		else:
-			total_time = total_time / 60
-			print "[*] CyberScan done: 1IP address (1host up) scanned in %.2f Minutes" %(total_time)
+    print "[*] Starting threaded scan with %d threads..." % max_threads
 
+    with ThreadPoolExecutor(max_workers=max_threads) as executor:
+        future_to_port = {executor.submit(check_port, port): port for port in ports_to_scan}
+        for future in as_completed(future_to_port):
+            port = future_to_port[future]
+            result = future.result()
+            if result is not None:
+                service = get_service(result)
+                open_ports.append({"port": result, "service": service})
+                print "\t[+] Port %d (%s): Open" % (result, service)
 
-		if open_ports:
-			print "[*] Open Ports: "
-			for i in sorted(open_ports):
-				service = get_service(i)
-				if not service:
-					service= "Unknown service"
-				print "\t%s %s: Open" % (i,service)
+    ending_time = time.time()
+    total_time = ending_time - starting_time
 
-		else:
-			print "[*] Sorry, No Open Ports Found.!!"
-	
-			
-	except KeyboardInterrupt:
-		print "\n[*] You Pressed Ctrl+C. Exiting"
-		sys.exit(1)		
+    print "[*] Scan completed in %.2f seconds" % total_time if total_time <= 60 else "[*] Scan completed in %.2f minutes" % (total_time / 60)
+
+    if open_ports:
+        print "\n[*] Summary of Open Ports:"
+        for p in sorted(open_ports, key=lambda x: x['port']):
+            print "\t%s (%s)" % (p['port'], p['service'])
+    else:
+        print "[*] No open ports found."
+
+    if output_file:
+        try:
+            if output_file.endswith('.json'):
+                result_data = {
+                    "host": host,
+                    "start_port": start_port,
+                    "end_port": end_port,
+                    "total_ports_scanned": len(ports_to_scan),
+                    "open_ports": open_ports,
+                    "scan_duration": total_time
+                }
+                with open(output_file, 'w') as f:
+                    json.dump(result_data, f, indent=4)
+                print "[*] Results saved to %s (JSON)" % output_file
+
+            elif output_file.endswith('.csv'):
+                with open(output_file, 'w', newline='') as f:
+                    writer = csv.writer(f)
+                    writer.writerow(["Port", "Service"])
+                    for p in sorted(open_ports, key=lambda x: x['port']):
+                        writer.writerow([p['port'], p['service']])
+                print "[*] Results saved to %s (CSV)" % output_file
+
+            else:
+                print "[*] Unsupported file format. Use .json or .csv"
+        except Exception as e:
+            print "[!] Error writing output file:", str(e)
 
 
 def pcap_analyser_eth(file):
@@ -410,21 +413,51 @@ def pcap_analyser_icmp(file):
 		if pkt.haslayer(ICMP):
 			i += 1
 			print "-" * 40
-			print "[*] Packet : " + str(i)	
+			print "[*] Packet : " + str(i)
 			print "[+] ###[ ICMP ] ###"
 			ICMPpkt = pkt[ICMP]
 			typeICMP = ICMPpkt.type
 			print "[*] ICMP Type : " ,typeICMP
-			codeICMP = ICMPpkt.code	
+			codeICMP = ICMPpkt.code
 			print "[*] ICMP Code : " ,codeICMP
 			chksumICMP = ICMPpkt.chksum
 			print "[*] ICMP Chksum : " ,chksumICMP
 			idICMP = ICMPpkt.id
 			print "[*] ICMP Id : " ,idICMP
 			seqICMP = ICMPpkt.seq
-			print "[*] ICMP Seq : " ,seqICMP	
-                        print "[*] ICMP Dump : " 
-			print hexdump(ICMPpkt)	
+			print "[*] ICMP Seq : " ,seqICMP
+            print "[*] ICMP Dump : "
+			print hexdump(ICMPpkt)
+
+
+def subdomain_scan(domain):
+    print '[*] Starting CyberScan Subdomain Enumeration for %s' %(domain)
+    try:
+        url = "https://dnsdumpster.com/"
+        req = urllib2.Request(url)
+        req.add_header('User-Agent', 'Mozilla/5.0 (Windows NT 6.1; WOW64; rv:40.0) Gecko/20100101 Firefox/40.1')
+        response = urllib2.urlopen(req)
+        html = response.read()
+        # Find the CSRF token
+        csrf_token = re.search(r'name="csrfmiddlewaretoken" value="([^"]+)"', html).group(1)
+        # Prepare the POST data
+        data = urllib.urlencode({'csrfmiddlewaretoken': csrf_token, 'targetip': domain})
+        req = urllib2.Request(url, data)
+        req.add_header('User-Agent', 'Mozilla/5.0 (Windows NT 6.1; WOW64; rv:40.0) Gecko/20100101 Firefox/40.1')
+        req.add_header('Referer', url)
+        response = urllib2.urlopen(req)
+        html = response.read()
+        # Extract subdomains
+        subdomains = re.findall(r'([a-zA-Z0-9\-\.]+\.' + re.escape(domain) + ')', html)
+        unique_subdomains = list(set(subdomains))
+        if unique_subdomains:
+            print "[*] Found subdomains:"
+            for sub in unique_subdomains:
+                print "\t" + sub
+        else:
+            print "[*] No subdomains found."
+    except Exception as e:
+        print "[*] Error: " + str(e)
 
 
 def main():
@@ -463,6 +496,8 @@ levels with pcap file:
 	    parser.add_argument("-t","--eport",dest="eport",help="end port to scan")
 	    parser.add_argument("-f", "--file", dest="file",
                       help="read pcap file")
+	    parser.add_argument("--domain", dest="domain", help="domain for subdomain enumeration")
+        parser.add_argument("--output", dest="output", help="Save scan results to file (JSON or CSV)") #New line added
 	
 
 	    args = parser.parse_args()
@@ -514,8 +549,18 @@ levels with pcap file:
 		
                 	elif serveur is not None and level == "geoip":
 				geo_ip(serveur)
+			#Output file option added to subdomain_scan
+            elif serveur is not None and level == "scan" and sport is not None and eport is not None:
+				start_port = int(sport)
+				end_port = int(eport)
+				flag = 0
+				superscan(serveur, start_port, end_port, output_file=output_file)
 
-		
+			elif serveur is not None and level == "scan" and sport is None and eport is None:
+				start_port = 0
+				end_port = 0
+				flag = 1
+				superscan(serveur, start_port, end_port, output_file=output_file)
 
             else:
          
@@ -531,10 +576,3 @@ use cyberscan -h to help '''
 	
 if __name__ == '__main__':
     main()
-
-    
-   
-    
-    	
-
-
