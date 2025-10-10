@@ -1,12 +1,12 @@
 # The CyberScan Module Usage
 
 
-[CyberScan](https://github.com/medbenali/CyberScan)  is able to send and capture packets of several protocols, forging and decoding them to be used to most network tasks such as scanning, pinging, probing, and attacks.
+[CyberScan](https://github.com/itsmemohamednaseem-rgb/CyberScan)  is able to send and capture packets of several protocols, forging and decoding them to be used to most network tasks such as scanning, pinging, probing, and attacks.
 
 Make sure you have CyberScan in your machine:
 
 ```sh
-$ git clone https://github.com/medbenali/CyberScan.git
+$ git clone https://github.com/itsmemohamednaseem-rgb/CyberScan.git
 ```
 
 You can test the installation firing up CyberScan iteratively. These are some useful functions:

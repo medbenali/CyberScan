@@ -8,7 +8,7 @@ can analyse packets , decoding  , scanning ports, pinging and geolocation of an 
 Screenshots
 ----
 
-![Screenshot](https://github.com/medbenali/CyberScan/blob/master/images/demo.png)
+![Screenshot](https://github.com/itsmemohamednaseem-rgb/CyberScan/blob/master/images/demo.png)
 
 Operating Systems Supported
 ---- 
@@ -20,9 +20,9 @@ Operating Systems Supported
 Installation
 ----
 
-You can download CyberScan by cloning the [Git](https://github.com/medbenali/CyberScan) repository:
+You can download CyberScan by cloning the [Git](https://github.com/itsmemohamednaseem-rgb/CyberScan) repository:
 
-    git clone https://github.com/medbenali/CyberScan.git
+    git clone https://github.com/itsmemohamednaseem-rgb/CyberScan.git
     cd CyberScan/
     python CyberScan.py -v
 
@@ -31,7 +31,7 @@ CyberScan works out of the box with [Python](http://www.python.org/download/) ve
 # The CyberScan Module Usage
 
 
-[CyberScan](https://github.com/medbenali/CyberScan)  is able to send and capture packets of several protocols, forging and decoding them to be used to most network tasks such as scanning, pinging, probing, and attacks.
+[CyberScan](https://github.com/itsmemohamednaseem-rgb/CyberScan)  is able to send and capture packets of several protocols, forging and decoding them to be used to most network tasks such as scanning, pinging, probing, and attacks.
 
 Make sure you have CyberScan in your machine:
 
@@ -281,7 +281,11 @@ Contact
 
 
 
-#### BEN ALI Mohamed 
+#### Original Author
+* BEN ALI Mohamed ([medbenali](https://www.github.com/medbenali))
+
+#### Current Maintainer
+* [itsmemohamednaseem-rgb](https://github.com/itsmemohamednaseem-rgb)
 [![alt text][10.1]][10]
 [![alt text][20.1]][20]
 [![alt text][30.1]][30]
