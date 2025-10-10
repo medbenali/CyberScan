@@ -28,6 +28,17 @@ You can download CyberScan by cloning the [Git](https://github.com/medbenali/Cyb
 
 CyberScan works out of the box with [Python](http://www.python.org/download/) version **2.6.x** and **2.7.x**. 
 
+# CyberScan v1.1.1
+
+Network scanning and analysis tool (Updated for Python 3)
+
+## Installation
+
+1. Clone the repository:
+```bash
+git clone <your-repo-url>
+cd CyberScan
+
 # The CyberScan Module Usage
 
 
