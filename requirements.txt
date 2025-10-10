@@ -1,0 +1,4 @@
+scapy==2.4.5
+pygeoip==0.3.2
+colorama==0.4.6
+
